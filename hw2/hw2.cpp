@@ -37,6 +37,7 @@ public:
 
 private:
    bool full() const;               // Return if queue is currently full
+
    T *v_;                           // Elements in queue
    size_t vsize_;                   // Size of queue
    int vhead_;                      // Array index of head of queue
@@ -168,6 +169,12 @@ Queue<T>::front()
 }
 
 template <typename T>
+const T &
+Queue<T>::front() const {
+   return front();
+}
+
+template <typename T>
 bool
 Queue<T>::full() const
 {
@@ -196,6 +203,25 @@ Queue<T>::size() const
          size_t(vtail_ + vsize_ - vhead_ + 1);
    }
 }
+
+struct FullQueueFixture
+{
+   FullQueueFixture()            // Setup function
+   {
+      pQueue = new Queue<int>;
+      for (int i = 1; i <= INITIAL_SIZE; ++i)
+      {
+         pQueue->push(i);
+      }
+   }
+
+   ~FullQueueFixture()           // Teardown function
+   {
+      delete pQueue;
+   }
+
+   Queue<int> *pQueue;
+};
 
 TEST(QueueConstructor)
 {
@@ -244,6 +270,27 @@ TEST(QueuePush)
    CHECK_EQUAL(expectedSize, newQueue.size());
 }
 
+TEST_FIXTURE(FullQueueFixture, QueuePushCircular)
+{
+   // Test the circular array by pushing and popping
+   // elements so that we go all the way around the array
+   // Starting with a full queue
+   CHECK_EQUAL(INITIAL_SIZE, pQueue->size());
+
+   // pop 2 elements off the queue and check the size
+   pQueue->pop();
+   pQueue->pop();
+   
+   CHECK_EQUAL(INITIAL_SIZE - 2, pQueue->size());
+
+   // push 2 elements back onto the queue and
+   // check the size
+   pQueue->push(5);
+   pQueue->push(6);
+
+   CHECK_EQUAL(INITIAL_SIZE, pQueue->size());
+}
+
 TEST(QueuePopEmpty)
 {
    Queue<int> newQueue;
@@ -275,14 +322,25 @@ TEST(QueueFrontEmpty)
 
 TEST(QueueFront)
 {
+   int expected = 3;
    Queue<int> newQueue;
-   newQueue.push(3);
+   newQueue.push(expected);
 
-   CHECK_EQUAL(3, newQueue.front());
+   CHECK_EQUAL(expected, newQueue.front());
 
    newQueue.push(5);
 
-   CHECK_EQUAL(3, newQueue.front());
+   CHECK_EQUAL(expected, newQueue.front());
+}
+
+TEST(QueueConstFront)
+{  
+   const int expected = 2;
+
+   Queue<int> newQueue;
+   newQueue.push(expected);
+
+   CHECK_EQUAL(expected, newQueue.front());
 }
 
 TEST(QueueIsEmpty)
@@ -306,6 +364,16 @@ TEST(QueueSize)
    newQueue.pop();
 
    CHECK_EQUAL(2, newQueue.size());
+}
+
+TEST_FIXTURE(FullQueueFixture, QueueSizeExpands)
+{
+   CHECK_EQUAL(INITIAL_SIZE, pQueue->size());
+
+   // Add another element to the queue and verify size increases
+   pQueue->push(42);
+
+   CHECK_EQUAL(INITIAL_SIZE + 1, pQueue->size());
 }
 
 int main() {
