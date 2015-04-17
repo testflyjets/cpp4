@@ -13,7 +13,12 @@ using std::copy;
 
 #include <cassert>
 
+#include <stdexcept>
+using std::logic_error;
+
 #include "UnitTest++.h"
+
+const size_t INITIAL_SIZE = 4;
 
 template <typename T>
 class Queue
@@ -36,14 +41,12 @@ private:
    size_t vsize_;                   // Size of queue
    int vhead_;                      // Array index of head of queue
    int vtail_;                      // Array index of tail of queue
-
-   const size_t INITIAL_SIZE = 10;
 };
 
 template <typename T>
 Queue<T>::Queue()
 :  v_(0),
-   vsize_(10),
+   vsize_(INITIAL_SIZE),
    vhead_(-1),
    vtail_(-1)
 {
@@ -154,7 +157,14 @@ template <typename T>
 T &
 Queue<T>::front()
 {
-   return v_[vhead_];
+   if (empty())
+   {
+      throw logic_error("front of empty queue");
+   }
+   else
+   {
+      return v_[vhead_];
+   }
 }
 
 template <typename T>
@@ -181,9 +191,9 @@ Queue<T>::size() const
    }
    else
    {
-      return (vhead_ >= vtail_) ? 
-         size_t(vhead_ - vtail_ + 1)  : 
-         size_t(vhead_ + vsize_ - vtail_ + 1);
+      return (vtail_ >= vhead_) ? 
+         size_t(vtail_ - vhead_ + 1)  : 
+         size_t(vtail_ + vsize_ - vhead_ + 1);
    }
 }
 
@@ -195,27 +205,84 @@ TEST(QueueConstructor)
 
 TEST(QueueDestructor)
 {
+   Queue<int> newQueue;
 
 }
 
 TEST(QueueCopyConstructor)
 {
+   int expected = 42;
 
+   Queue<int> newQueue;
+   newQueue.push(expected);
+
+   Queue<int> copyQueue(newQueue);
+
+   CHECK_EQUAL(expected, copyQueue.front());
 }
 
 TEST(QueueCopyAssignment)
 {
+   int expected = 37;
 
+   Queue<int> newQueue;
+   newQueue.push(expected);
+
+   Queue<int> copyQueue = newQueue;
+
+   CHECK_EQUAL(expected, copyQueue.front());
 }
 
 TEST(QueuePush)
 {
-   Queue<int> newQueue;
+   int expectedSize = 1;
 
-   newQueue.push(1);
+   Queue<int> newQueue;
+   newQueue.push(13);
 
    CHECK(!newQueue.empty());
+   CHECK_EQUAL(expectedSize, newQueue.size());
+}
+
+TEST(QueuePopEmpty)
+{
+   Queue<int> newQueue;
+
+   CHECK_THROW(newQueue.pop(), logic_error);
+}
+
+TEST(QueuePop)
+{
+   Queue<int> newQueue;
+   newQueue.push(2);
+   newQueue.pop();
+
+   CHECK_EQUAL(0, newQueue.size());
+
+   newQueue.push(3);
+   newQueue.push(4);
+   newQueue.pop();
+
    CHECK_EQUAL(1, newQueue.size());
+}
+
+TEST(QueueFrontEmpty)
+{
+   Queue<int> newQueue;
+
+   CHECK_THROW(newQueue.front(), logic_error);
+}
+
+TEST(QueueFront)
+{
+   Queue<int> newQueue;
+   newQueue.push(3);
+
+   CHECK_EQUAL(3, newQueue.front());
+
+   newQueue.push(5);
+
+   CHECK_EQUAL(3, newQueue.front());
 }
 
 TEST(QueueIsEmpty)
@@ -227,7 +294,18 @@ TEST(QueueIsEmpty)
 TEST(QueueSize)
 {
    Queue<int> newQueue;
+
    CHECK_EQUAL(0, newQueue.size());
+
+   newQueue.push(1);
+   newQueue.push(2);
+   newQueue.push(3);
+   
+   CHECK_EQUAL(3, newQueue.size());
+
+   newQueue.pop();
+
+   CHECK_EQUAL(2, newQueue.size());
 }
 
 int main() {
