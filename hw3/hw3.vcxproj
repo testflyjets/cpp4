@@ -74,12 +74,12 @@
   <ItemGroup>
     <ClCompile Include="DigitStrippingSPA.cpp" />
     <ClCompile Include="hw3.cpp" />
-    <ClCompile Include="StreamProcessingAlgorithm.cpp" />
+    <ClCompile Include="StreamProcessorAlgorithm.cpp" />
     <ClCompile Include="UppercasingSPA.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DigitStrippingSPA.h" />
-    <ClInclude Include="StreamProcessingAlgorithm.h" />
+    <ClInclude Include="StreamProcessorAlgorithm.h" />
     <ClInclude Include="UppercasingSPA.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

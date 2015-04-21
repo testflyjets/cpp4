@@ -18,24 +18,24 @@
     <ClCompile Include="hw3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="StreamProcessingAlgorithm.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="UppercasingSPA.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DigitStrippingSPA.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="StreamProcessorAlgorithm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="StreamProcessingAlgorithm.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="UppercasingSPA.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DigitStrippingSPA.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StreamProcessorAlgorithm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

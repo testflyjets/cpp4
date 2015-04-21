@@ -11,7 +11,7 @@
  * Template Method design pattern.
  */
 
-#include "StreamProcessingAlgorithm.h"
+#include "StreamProcessorAlgorithm.h"
 using namespace hw3;
 
 StreamProcessorAlgorithm::StreamProcessorAlgorithm(
@@ -19,6 +19,10 @@ StreamProcessorAlgorithm::StreamProcessorAlgorithm(
    ostream &out)
    : in_(in),
      out_(out)
+{
+}
+
+StreamProcessorAlgorithm::~StreamProcessorAlgorithm()
 {
 }
 

@@ -15,8 +15,6 @@ using std::cin;
 using std::cout;
 
 #include "DigitStrippingSPA.h"
-#include "StreamProcessingAlgorithm.h"
-#include "UppercasingSPA.h"
 
 using namespace hw3;
 

@@ -14,7 +14,7 @@
 #ifndef DIGITSTRIPPINGSPA_H
 #define DIGITSTRIPPINGSPA_H
 
-#include "StreamProcessingAlgorithm.h"
+#include "StreamProcessorAlgorithm.h"
 
 namespace hw3
 {
@@ -22,15 +22,11 @@ namespace hw3
    {
    public:
       DigitStrippingSPA(istream &in, ostream &out);
-      virtual ~DigitStrippingSPA();
-
-      // process():
-      //
-      void process();
+      ~DigitStrippingSPA();
    
    private:
-      bool filterToken(const string &token) const = 0;
-      void processToken(string &token) const = 0;
+      bool filterToken(const string &token) const;
+      void processToken(string &token) const;
    };
 }
 

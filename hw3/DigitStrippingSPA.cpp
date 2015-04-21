@@ -18,7 +18,6 @@ DigitStrippingSPA::DigitStrippingSPA(
    ostream &out)
    : StreamProcessorAlgorithm(in, out)
 {
-
 }
 
 DigitStrippingSPA::~DigitStrippingSPA()

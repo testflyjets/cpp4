@@ -14,7 +14,7 @@
 #ifndef UPPERCASINGSPA_H
 #define UPPERCASINGSPA_H
 
-#include "StreamProcessingAlgorithm.h"
+#include "StreamProcessorAlgorithm.h"
 
 namespace hw3
 {
@@ -22,15 +22,11 @@ namespace hw3
    {
    public:
       UppercasingSPA(istream &in, ostream &out);
-      virtual ~UppercasingSPA();
-
-      // process():
-      //
-      void process();
+      ~UppercasingSPA();
   
    private:
-      bool filterToken(const string &token) const = 0;
-      void processToken(string &token) const = 0;
+      bool filterToken(const string &token) const;
+      void processToken(string &token) const;
    };
 }
 

@@ -23,6 +23,11 @@ UppercasingSPA::UppercasingSPA(
 
 }
 
+UppercasingSPA::~UppercasingSPA()
+{
+
+}
+
 bool
 UppercasingSPA::filterToken(const string &token) const
 {
