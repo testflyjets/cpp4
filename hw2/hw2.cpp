@@ -6,7 +6,14 @@
  * Windows 8.1 Enterprise 64-bit
  * Microsoft Visual Studio 2013 Express for Desktop
  *
- * A test program for an exception-safe, exception-neutral Queue type
+ * A test program for an exception-safe, exception-neutral Queue type.
+ * The queue is implemented as an automatically growable circular array.
+ * Two indices are used to track the head and tail of the queue, and these
+ * rotate around the queue as required based on the number of elements.
+ *
+ * The queue is declared with an initial maximum capacity, and if an element
+ * is added to the queue when it is full the queue is grown to (2*size + 1)
+ * elements. 
  */
 
 #include <algorithm>
@@ -34,8 +41,8 @@ public:
    void push(const T &);            // Add elem to back of queue
    void pop();                      // Remove front elem from queue
 
-   T &front();                      // Return ref to front elem in queue
-   const T &front() const;          // Return ref to front elem in queue
+   T &front();                      // Return ref to front elem in queue (l-value)
+   const T &front() const;          // Return ref to front elem in const queue (r-value)
 
    bool empty() const;              // Return whether queue is empty
    size_t size() const;             // Return # of elems in queue
@@ -43,8 +50,8 @@ public:
 private:
    bool full() const;               // Return if queue is currently full
 
-   T *v_;                           // Elements in queue
-   size_t vsize_;                   // Size of queue
+   T *v_;                           // Container for elements in queue
+   size_t vsize_;                   // Current max size of queue
    int vhead_;                      // Array index of head of queue
    int vtail_;                      // Array index of tail of queue
 };
@@ -106,6 +113,7 @@ Queue<T>::operator=(const Queue<T> &other)
          other.vsize_);
 
       delete[] v_;
+
       v_ = v_new; 
       vsize_ = other.vsize_;
       vhead_ = other.vhead_;
@@ -126,13 +134,33 @@ Queue<T>::push(const T& t)
    {
       if (full())
       {
+         // expand the container
          size_t vsize_new = vsize_ * 2 + 1;
          T *v_new = newCopy(v_, vsize_, vsize_new);
+
+         // if the head of the queue isn't at zero
+         // we have to rearrange the elements in the 
+         // proper order
+         if (vhead_ != 0)
+         {
+            for (size_t i = 0; i < vsize_; ++i)
+            {
+               v_new[i] = v_[vhead_];
+               vhead_ = (vhead_ + 1) % vsize_;
+            }
+            vhead_ = 0;
+         }
+
          delete[] v_;
          v_ = v_new;
+         vtail_ = vsize_;
          vsize_ = vsize_new;
+         
+      } 
+      else
+      {
+         vtail_ = (vtail_ + 1) % vsize_;
       }
-      vtail_ = (vtail_ + 1) % vsize_;
    }
 
    v_[vtail_] = t; 
@@ -176,7 +204,14 @@ Queue<T>::front()
 template <typename T>
 const T &
 Queue<T>::front() const {
-   return front();
+   if (empty())
+   {
+      throw logic_error("front of empty const queue");
+   }
+   else
+   {
+      return v_[vhead_];
+   }
 }
 
 template <typename T>
@@ -230,17 +265,30 @@ struct FullQueueFixture
 
 TEST(QueueConstructor)
 {
-   Queue<int> *pQueue;
-   pQueue = new Queue<int>();
+   try {
+      Queue<int> *pQueue;
+      pQueue = new Queue<int>();
 
-   CHECK_EQUAL(0, pQueue->size());
+      CHECK_EQUAL(0, pQueue->size());
+   } 
+   catch (...)
+   {
+      CHECK_ASSERT(false);
+   }
 }
 
 TEST(QueueDestructor)
 {
-   Queue<int> *pQueue;
-   pQueue = new Queue<int>();
-   delete pQueue;
+   try
+   {
+      Queue<int> *pQueue;
+      pQueue = new Queue<int>();
+      delete pQueue;
+   }
+   catch (...)
+   {
+      CHECK_ASSERT(false);
+   }
 }
 
 TEST(QueueCopyConstructor)
@@ -270,20 +318,28 @@ TEST(QueueCopyAssignment)
 TEST(QueuePush)
 {
    int expectedSize = 1;
+   int expectedFront = 13;
 
    Queue<int> newQueue;
-   newQueue.push(13);
+   newQueue.push(expectedFront);
 
    CHECK(!newQueue.empty());
+   CHECK_EQUAL(expectedFront, newQueue.front());
    CHECK_EQUAL(expectedSize, newQueue.size());
+
+   newQueue.push(42);
+   CHECK_EQUAL(expectedFront, newQueue.front());
 }
 
 TEST_FIXTURE(FullQueueFixture, QueuePushCircular)
 {
    // Test the circular array by pushing and popping
    // elements so that we go all the way around the array
-   // Starting with a full queue
+
+   // Starting with a full queue, check its size
+   // and the front element (should be 1)
    CHECK_EQUAL(INITIAL_SIZE, pQueue->size());
+   CHECK_EQUAL(1, pQueue->front());
 
    // pop 2 elements off the queue and check the size
    pQueue->pop();
@@ -292,11 +348,33 @@ TEST_FIXTURE(FullQueueFixture, QueuePushCircular)
    CHECK_EQUAL(INITIAL_SIZE - 2, pQueue->size());
 
    // push 2 elements back onto the queue and
-   // check the size
+   // check the size and the front element, which
+   // should be 3
    pQueue->push(5);
    pQueue->push(6);
 
    CHECK_EQUAL(INITIAL_SIZE, pQueue->size());
+   CHECK_EQUAL(3, pQueue->front());
+}
+
+TEST_FIXTURE(FullQueueFixture, QueuePushExpanded)
+{
+   // Test that the queue expands properly so that 
+   // the front element remains unchanged when the 
+   // tail index is less than the head index
+
+   // pop an element off the queue, front should be [2]
+   pQueue->pop();
+   CHECK_EQUAL(2, pQueue->front());
+
+   // push another element on, front should still be [2]
+   pQueue->push(11);
+   CHECK_EQUAL(2, pQueue->front());
+
+   // push another element on, queue should expand 
+   // and front should still be [2]
+   pQueue->push(13);
+   CHECK_EQUAL(2, pQueue->front());
 }
 
 TEST(QueuePopEmpty)
@@ -341,14 +419,23 @@ TEST(QueueFront)
    CHECK_EQUAL(expected, newQueue.front());
 }
 
-TEST(QueueConstFront)
+TEST(ConstQueueFrontEmpty)
 {  
-   const int expected = 2;
+   const Queue<int> constQueue;
+   
+   CHECK_THROW(constQueue.front(), logic_error);
+}
+
+TEST(ConstQueueFront)
+{
+   int expectedFront = 42;
 
    Queue<int> newQueue;
-   newQueue.push(expected);
+   newQueue.push(expectedFront);
 
-   CHECK_EQUAL(expected, newQueue.front());
+   const Queue<int> constQueue(newQueue);
+
+   CHECK_EQUAL(expectedFront, constQueue.front());
 }
 
 TEST(QueueIsEmpty)
@@ -357,28 +444,55 @@ TEST(QueueIsEmpty)
    CHECK(newQueue.empty());
 }
 
-TEST(QueueSize)
+TEST(QueueSizeEmpty)
 {
+   // check empty size
    Queue<int> newQueue;
 
    CHECK_EQUAL(0, newQueue.size());
+}
+
+TEST(QueueSizeOneElement)
+{
+   // check the queue size with one element,
+   // when head == tail
+   Queue<int> newQueue;
 
    newQueue.push(1);
-   newQueue.push(2);
-   newQueue.push(3);
+
+   CHECK_EQUAL(1, newQueue.size());
+}
+
+TEST_FIXTURE(FullQueueFixture, QueueSizeFull)
+{  
+   // check the size of a full queue,
+   // when head > tail
+   CHECK_EQUAL(INITIAL_SIZE, pQueue->size());
+}
+
+TEST_FIXTURE(FullQueueFixture, QueueSizeWrappedAround)
+{  
+   // check the size of a full queue that
+   // has wrapped around so that head < tail
    
-   CHECK_EQUAL(3, newQueue.size());
+   // remove the item at the head of the queue
+   pQueue->pop();
 
-   newQueue.pop();
+   // add another item to the tail; this will
+   // cause the queue to wrap around so that the
+   // the head index == 1 and the tail index == 0
+   pQueue->push(42);
 
-   CHECK_EQUAL(2, newQueue.size());
+   CHECK_EQUAL(INITIAL_SIZE, pQueue->size());
 }
 
 TEST_FIXTURE(FullQueueFixture, QueueSizeExpands)
 {
+   // start with a full queue
    CHECK_EQUAL(INITIAL_SIZE, pQueue->size());
 
-   // Add another element to the queue and verify size increases
+   // Add another element to the queue and verify size 
+   // increases beyond the initial max size
    pQueue->push(42);
 
    CHECK_EQUAL(INITIAL_SIZE + 1, pQueue->size());
