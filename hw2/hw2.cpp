@@ -48,6 +48,8 @@ public:
    size_t size() const;             // Return # of elems in queue
 
 private:
+   int next(int index) const;       // Return the index of the next array position 
+                                    // after the given index in the circular array
    bool full() const;               // Return if queue is currently full
 
    T *v_;                           // Container for elements in queue
@@ -99,7 +101,6 @@ Queue<T>::Queue(const Queue<T> &other)
    vhead_(other.vhead_),
    vtail_(other.vtail_)
 {
-
 }
 
 template <typename T>
@@ -146,7 +147,7 @@ Queue<T>::push(const T& t)
             for (size_t i = 0; i < vsize_; ++i)
             {
                v_new[i] = v_[vhead_];
-               vhead_ = (vhead_ + 1) % vsize_;
+               vhead_ = next(vhead_);
             }
             vhead_ = 0;
          }
@@ -159,7 +160,7 @@ Queue<T>::push(const T& t)
       } 
       else
       {
-         vtail_ = (vtail_ + 1) % vsize_;
+         vtail_ = next(vtail_);
       }
    }
 
@@ -182,7 +183,7 @@ Queue<T>::pop()
       }
       else
       {
-         vhead_ = (vhead_ + 1) % vsize_;
+         vhead_ = next(vhead_);
       }
    }
 }
@@ -218,7 +219,14 @@ template <typename T>
 bool
 Queue<T>::full() const
 {
-   return (vtail_ + 1) % vsize_ == vhead_;
+   return next(vtail_) == vhead_;
+}
+
+template <typename T>
+int
+Queue<T>::next(int index) const
+{
+   return (index + 1) % vsize_;
 }
 
 template <typename T>
