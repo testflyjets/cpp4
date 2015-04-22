@@ -27,6 +27,7 @@ StreamProcessorAlgorithm::StreamProcessorAlgorithm(
 
 StreamProcessorAlgorithm::~StreamProcessorAlgorithm()
 {
+   // nothing to do here -- all the member vars are automatics
 }
 
 void
@@ -34,6 +35,7 @@ StreamProcessorAlgorithm::process()
 {
    string token;
 
+   // read tokens via the stream extraction operator
    while (in_ >> token)
    {
       if (filterToken(token))

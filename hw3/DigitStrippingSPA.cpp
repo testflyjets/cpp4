@@ -15,7 +15,7 @@
 #include "DigitStrippingSPA.h"
 using namespace hw3;
 
-const static string DIGITS = "0123456789";
+const static string DIGITS = "0123456789";      // the filter tokens
 
 DigitStrippingSPA::DigitStrippingSPA(
    istream &in,
@@ -32,12 +32,14 @@ DigitStrippingSPA::~DigitStrippingSPA()
 bool
 DigitStrippingSPA::filterToken(const string &token) const
 {
+   // look for the first occurence of a digit
    return token.find_first_of(DIGITS) != std::string::npos;
 }
 
 void
 DigitStrippingSPA::processToken(string &token) const
 {
+   // erase each digit found in the token
    size_t found = token.find_first_of(DIGITS);
    while (found != std::string::npos)
    {

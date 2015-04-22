@@ -7,8 +7,11 @@
  * Windows 8.1 Enterprise 64-bit
  * Microsoft Visual Studio 2013 Express for Desktop
  *
- * A concrete implementation of the StreamProcessingAlgorigthm
- * that ...
+ * A concrete implementation of the StreamProcessingAlgorithm
+ * that operates as follows:
+ *    - filter: passes through tokens that contain at least one 
+ *      numerical digit
+ *    - process: strips all digits out of the tokens
  */
 
 #ifndef DIGITSTRIPPINGSPA_H

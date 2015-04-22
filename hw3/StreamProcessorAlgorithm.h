@@ -30,17 +30,20 @@ namespace hw3
       StreamProcessorAlgorithm(istream &in, ostream &out);
       virtual ~StreamProcessorAlgorithm();
 
-      // process():
-      //
       // For each whitespace separated string (token) read from the input stream:
-      // If the token passes through the filter (i.e. filterToken returns true):
-      // Process the token and output it to the output stream
+      //  - If the token passes through the filter (i.e. filterToken returns true):
+      //    - Process the token and output it to the output stream
       void process();
 
    private:
+      // determines if a token is passed through for processing
       virtual bool filterToken(const string &token) const = 0;
+      // processes tokens, possibly modifying them
       virtual void processToken(string &token) const = 0;
+
+      // the input stream from which tokens are parsed
       istream &in_;
+      // the output stream to which tokens are written
       ostream &out_;
    };
 }

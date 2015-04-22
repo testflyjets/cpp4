@@ -8,7 +8,10 @@
  * Microsoft Visual Studio 2013 Express for Desktop
  *
  * A concrete implementation of the StreamProcessingAlgorigthm
- * that ...
+ * that operates as follows:
+ *    - filter: passes through all tokens
+ *    - process: converts all characters in the token to their uppercase form
+ *      if an uppercase exists, otherwise leaves characters as-is
  */
 
 #ifndef UPPERCASINGSPA_H

@@ -29,6 +29,9 @@ using namespace hw3;
 #include "UnitTest++.h"
 
 // a function template to make testing easier
+// allows us to use a concrete subclass of the
+// StreamProcessorAlgorithm along with the test input
+// and expected output to create a test function.
 template <typename T>
 void testSPA(
    string testString,
