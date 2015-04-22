@@ -14,7 +14,15 @@
 using std::cin;
 using std::cout;
 
+#include <sstream>
+using std::istringstream;
+using std::ostringstream;
+
+#include <string>
+using std::string;
+
 #include "DigitStrippingSPA.h"
+#include "UppercasingSPA.h"
 
 using namespace hw3;
 
@@ -23,6 +31,47 @@ using namespace hw3;
 TEST(DigitStrippingSPAConstructor)
 {
    DigitStrippingSPA dsSPA(cin, cout);
+}
+
+TEST(UppercasingSPAConstructor)
+{
+   UppercasingSPA ucSPA(cin, cout);
+}
+
+TEST(UppercasingSPAEmpty)
+{
+   istringstream testIn("");
+   ostringstream testOut;
+   string expectedOut("");
+
+   UppercasingSPA ucSPA(testIn, testOut);
+   ucSPA.process();
+
+   CHECK_EQUAL(expectedOut, testOut.str());
+}
+
+TEST(UppercasingSPAShortText)
+{
+   istringstream testIn("hello world");
+   ostringstream testOut;
+   string expectedOut("HELLOWORLD");
+
+   UppercasingSPA ucSPA(testIn, testOut);
+   ucSPA.process();
+
+   CHECK_EQUAL(expectedOut, testOut.str());
+}
+
+TEST(UppercasingSPALongText)
+{
+   istringstream testIn("Wait1! Wait2!   Don't tell me!");
+   ostringstream testOut;
+   string expectedOut("WAIT1!WAIT2!DON'TTELLME!");
+
+   UppercasingSPA ucSPA(testIn, testOut);
+   ucSPA.process();
+
+   CHECK_EQUAL(expectedOut, testOut.str());
 }
 
 int main() {

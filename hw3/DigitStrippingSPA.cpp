@@ -28,7 +28,7 @@ DigitStrippingSPA::~DigitStrippingSPA()
 bool
 DigitStrippingSPA::filterToken(const string &token) const
 {
-   return false;
+   return true;
 }
 
 void 

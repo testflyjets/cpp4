@@ -11,6 +11,9 @@
  * Template Method design pattern.
  */
 
+#include <string>
+using std::string;
+
 #include "StreamProcessorAlgorithm.h"
 using namespace hw3;
 
@@ -29,5 +32,14 @@ StreamProcessorAlgorithm::~StreamProcessorAlgorithm()
 void
 StreamProcessorAlgorithm::process()
 {
+   string token;
 
+   while (in_ >> token)
+   {
+      if (filterToken(token))
+      {
+         processToken(token);
+         out_ << token;
+      }
+   }
 }

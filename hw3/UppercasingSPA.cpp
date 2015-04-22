@@ -7,9 +7,13 @@
  * Windows 8.1 Enterprise 64-bit
  * Microsoft Visual Studio 2013 Express for Desktop
  *
- * Implementation of a stream processing algorithm that ...
+ * Implementation of a stream processing algorithm that 
+ * allows all tokens to pass through and converts to upper 
+ * case all letters in the tokens that pass through.
  *
  */
+
+#include <cctype>
 
 #include "UppercasingSPA.h"
 
@@ -31,11 +35,14 @@ UppercasingSPA::~UppercasingSPA()
 bool
 UppercasingSPA::filterToken(const string &token) const
 {
-   return false;
+   return true;
 }
 
 void 
 UppercasingSPA::processToken(string &token) const
 {
-
+   for (size_t i = 0; i < token.length(); ++i)
+   {
+      token[i] = toupper(token[i]);
+   }
 }
