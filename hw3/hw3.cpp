@@ -63,11 +63,25 @@ TEST(UppercasingSPAShortString)
       "HELLOWORLD");
 }
 
+TEST(UppercasingSPAAllUppers)
+{
+   testSPA<UppercasingSPA>(
+      "HELLO WORLD",
+      "HELLOWORLD");
+}
+
 TEST(UppercasingSPALongString)
 {
    testSPA<UppercasingSPA>(
       "Wait1! Wait2!   Don't tell me!", 
       "WAIT1!WAIT2!DON'TTELLME!");
+}
+
+TEST(UppercasingSPAAllNonAlpha)
+{
+   testSPA<UppercasingSPA>(
+      "123#@$ 0987) (*(&", 
+      "123#@$0987)(*(&");
 }
 
 TEST(DigitStrippingSPAConstructor)
