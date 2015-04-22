@@ -10,8 +10,12 @@
  * Implementation of a stream processing algorithm that ...
  */
 
+#include <string>
+
 #include "DigitStrippingSPA.h"
 using namespace hw3;
+
+const static string DIGITS = "0123456789";
 
 DigitStrippingSPA::DigitStrippingSPA(
    istream &in,
@@ -28,11 +32,16 @@ DigitStrippingSPA::~DigitStrippingSPA()
 bool
 DigitStrippingSPA::filterToken(const string &token) const
 {
-   return true;
+   return token.find_first_of(DIGITS) != std::string::npos;
 }
 
-void 
+void
 DigitStrippingSPA::processToken(string &token) const
 {
-
+   size_t found = token.find_first_of(DIGITS);
+   while (found != std::string::npos)
+   {
+      token.erase(found, 1);
+      found = token.find_first_of(DIGITS, found);
+   }
 }

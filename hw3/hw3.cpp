@@ -28,9 +28,22 @@ using namespace hw3;
 
 #include "UnitTest++.h"
 
-TEST(DigitStrippingSPAConstructor)
+// a function template to make testing easier
+template <typename T>
+void testSPA(
+   string testString,
+   string expectedString)
 {
-   DigitStrippingSPA dsSPA(cin, cout);
+   istringstream testIn(testString);
+   ostringstream testOut;
+   string expectedOut(expectedString);
+
+   StreamProcessorAlgorithm *spa = new T(testIn, testOut);
+   spa->process();
+
+   CHECK_EQUAL(expectedOut, testOut.str());
+
+   delete spa;
 }
 
 TEST(UppercasingSPAConstructor)
@@ -38,40 +51,53 @@ TEST(UppercasingSPAConstructor)
    UppercasingSPA ucSPA(cin, cout);
 }
 
-TEST(UppercasingSPAEmpty)
+TEST(UppercasingSPAEmptyString)
 {
-   istringstream testIn("");
-   ostringstream testOut;
-   string expectedOut("");
-
-   UppercasingSPA ucSPA(testIn, testOut);
-   ucSPA.process();
-
-   CHECK_EQUAL(expectedOut, testOut.str());
+   testSPA<UppercasingSPA>("", "");
 }
 
-TEST(UppercasingSPAShortText)
+TEST(UppercasingSPAShortString)
 {
-   istringstream testIn("hello world");
-   ostringstream testOut;
-   string expectedOut("HELLOWORLD");
-
-   UppercasingSPA ucSPA(testIn, testOut);
-   ucSPA.process();
-
-   CHECK_EQUAL(expectedOut, testOut.str());
+   testSPA<UppercasingSPA>(
+      "hello world", 
+      "HELLOWORLD");
 }
 
-TEST(UppercasingSPALongText)
+TEST(UppercasingSPALongString)
 {
-   istringstream testIn("Wait1! Wait2!   Don't tell me!");
-   ostringstream testOut;
-   string expectedOut("WAIT1!WAIT2!DON'TTELLME!");
+   testSPA<UppercasingSPA>(
+      "Wait1! Wait2!   Don't tell me!", 
+      "WAIT1!WAIT2!DON'TTELLME!");
+}
 
-   UppercasingSPA ucSPA(testIn, testOut);
-   ucSPA.process();
+TEST(DigitStrippingSPAConstructor)
+{
+   DigitStrippingSPA dsSPA(cin, cout);
+}
 
-   CHECK_EQUAL(expectedOut, testOut.str());
+TEST(DigitStrippingSPAEmptyString)
+{
+   testSPA<DigitStrippingSPA>("", "");
+}
+
+TEST(DigitStrippingSPANoDigits)
+{
+   testSPA<DigitStrippingSPA>("hello world", "");
+}
+
+TEST(DigitStrippingSPAShortString)
+{
+   testSPA<DigitStrippingSPA>("h3llo world", "hllo");
+}
+
+TEST(DigitStrippingSPAMultiDigit)
+{
+   testSPA<DigitStrippingSPA>("h42ll0", "hll");
+}
+
+TEST(DigitStrippingSPAAllDigits)
+{
+   testSPA<DigitStrippingSPA>("98765", "");
 }
 
 int main() {
