@@ -19,6 +19,9 @@ using std::ostream;
 #include <string>
 using std::string;
 
+#include <vector>
+using std::vector;
+
 namespace Project1 
 { 
    class BigInt 
@@ -47,7 +50,10 @@ namespace Project1
       const BigInt &operator-=(const BigInt &);
 
    private: 
-   
+      void removeLeadingZeroes();
+
+      vector<int> val;
+      bool pos;
    };
 }
 

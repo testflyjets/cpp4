@@ -9,22 +9,29 @@
  * Implementation file for a big integer class
  */
 
+#include <iostream>
+using std::istream;
+using std::ostream;
+
 #include <string>
 using std::string;
 
 #include "BigInt.h"
 
 Project1::BigInt::BigInt()
+: pos(true)
+{
+   val.push_back(0);
+}
+
+Project1::BigInt::BigInt(const BigInt &bi)
+: pos(bi.pos)
 {
 
 }
 
-Project1::BigInt::BigInt(const BigInt &bigInt)
-{
-
-}
-
-Project1::BigInt::BigInt(long long longInt)
+Project1::BigInt::BigInt(long long ll)
+: pos(ll > 0)
 {
 
 }
@@ -35,19 +42,73 @@ Project1::BigInt::BigInt(const string &strInt)
 }
 
 const Project1::BigInt &
-Project1::BigInt::operator=(const BigInt &bigInt)
+Project1::BigInt::operator=(const BigInt &rhs)
 {
-
+   return rhs;
 }
 
 const Project1::BigInt &
-Project1::BigInt::operator+=(const BigInt &bigInt)
+Project1::BigInt::operator+=(const BigInt &rhs)
 {
-
+   return rhs;
 }
 
 const Project1::BigInt &
-Project1::BigInt::operator-=(const BigInt &bigInt)
+Project1::BigInt::operator-=(const BigInt &rhs)
 {
+   return rhs;
+}
 
+const Project1::BigInt 
+Project1::operator+(const BigInt &lhs, const BigInt &rhs)
+{
+   return lhs;
+}
+
+const Project1::BigInt
+Project1::operator-(const BigInt &lhs, const BigInt &rhs)
+{
+   return lhs;
+}
+
+bool Project1::operator==(const BigInt &lhs, const BigInt &rhs)
+{
+   return true;
+}
+
+bool Project1::operator!=(const BigInt &lhs, const BigInt &rhs)
+{
+   return true;
+}
+
+bool Project1::operator<(const BigInt &lhs, const BigInt &rhs)
+{
+   return true;
+}
+
+bool Project1::operator<=(const BigInt &lhs, const BigInt &rhs)
+{
+   return true;
+}
+
+bool Project1::operator>(const BigInt &lhs, const BigInt &rhs)
+{
+   return true;
+}
+
+bool Project1::operator>=(const BigInt &lhs, const BigInt &rhs)
+{
+   return true;
+}
+
+ostream &
+Project1::operator<<(ostream &os, const BigInt &bi)
+{
+   return os;
+}
+
+istream &
+Project1::operator>>(istream &is, BigInt &bi)
+{
+   return is;
 }
