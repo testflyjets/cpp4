@@ -8,6 +8,7 @@
  * 
  * Header file for a big integer class
  */
+
 #ifndef PROJECT1_BIGINT_H
 #define PROJECT1_BIGINT_H
 
@@ -34,7 +35,8 @@ namespace Project1
       friend istream &operator>>(istream &, BigInt &);
 
    public: 
-      BigInt(); BigInt(const BigInt &); 
+      BigInt(); 
+      BigInt(const BigInt &); 
       BigInt(long long); 
       // Throws invalid_argument if string malformed (contains 
       // anything other than a legally formatted number) 
