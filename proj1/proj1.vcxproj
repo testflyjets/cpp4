@@ -68,7 +68,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BigInt.cpp" />
-    <ClCompile Include="Z:\chris On My Mac\Dropbox\_UCSD_ext\C4\project1\main.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\C3\ext\unittest++\UnitTest++.vcxproj">

@@ -15,10 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Z:\chris On My Mac\Dropbox\_UCSD_ext\C4\project1\main.cpp">
+    <ClCompile Include="BigInt.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BigInt.cpp">
+    <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
