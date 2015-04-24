@@ -35,9 +35,17 @@ using std::vector;
 
 #include "UnitTest++.h"
 
-int current = 0;
 // a simple function to create sequential integer values
-int SequenceNumber () { return ++current; }
+static int SequenceNumber () { 
+   static int current = 0;
+   return ++current; 
+}
+
+// a unary function to test if a number is even
+static bool IsEven (int i) 
+{ 
+   return (i % 2) == 0; 
+}
 
 TEST(GenerateAccumulateDeque)
 {
@@ -63,12 +71,9 @@ TEST(TransformStringToUppercase)
    transform(lowerAlphabet.begin(), lowerAlphabet.end(), lowerAlphabet.begin(), ::toupper);
 
    // test our expectations
-   string upperAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-   CHECK_EQUAL(upperAlphabet, lowerAlphabet);
+   const string EXPECTED = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+   CHECK_EQUAL(EXPECTED, lowerAlphabet);
 }
-
-// a unary function to test if a number is even
-bool IsEven (int i) { return (i%2) == 0; }
 
 TEST(PartitionSortVector)
 {
@@ -78,8 +83,7 @@ TEST(PartitionSortVector)
 
    // use partition to place the even numbers in the first half of the vector
    // and the odd numbers in the second half
-   vector<int>::iterator bound;
-   bound = partition(vectorNums.begin(), vectorNums.end(), IsEven);
+   vector<int>::iterator bound = partition(vectorNums.begin(), vectorNums.end(), IsEven);
 
    // sort the even and odd partitions of the vector
    sort(vectorNums.begin(), bound);
@@ -91,8 +95,8 @@ TEST(PartitionSortVector)
    copy(vectorNums.begin(), vectorNums.end(), ostream_iterator<int>(outputStream));
    
    // test our expectations
-   string expected = "24681013579";
-   CHECK_EQUAL(expected, outputStream.str());
+   const string EXPECTED("24681013579");
+   CHECK_EQUAL(EXPECTED, outputStream.str());
 }
 
 int main() {
