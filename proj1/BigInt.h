@@ -56,6 +56,10 @@ namespace Project1
       // the number of digits
       size_t numberOfDigits() const;
 
+      // correct the sign of the number
+      void correctSign();
+
+      // remove leading zeroes
       void removeLeadingZeroes();
 
       vector<int> val;
