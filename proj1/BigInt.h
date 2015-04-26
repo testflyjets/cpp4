@@ -52,6 +52,8 @@ namespace Project1
    private: 
       // create a BigInt from a string
       void fromString(const string &);
+      // swap contents between this and another instance
+      void swap(BigInt &);
 
       // the number of digits
       size_t numberOfDigits() const;

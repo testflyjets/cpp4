@@ -65,11 +65,9 @@ Project1::BigInt::BigInt(const string &strInt)
 const Project1::BigInt &
 Project1::BigInt::operator=(const BigInt &rhs)
 {
-   // see pp. 82-83 in course notes (Ray: "use this approach")
-   // BigInt temp(rhs);
-   // Swap(temp);
-   // return *this;
-   return rhs;
+   BigInt temp(rhs);
+   swap(temp);
+   return *this;
 }
 
 const Project1::BigInt &
@@ -98,12 +96,24 @@ Project1::operator-(const BigInt &lhs, const BigInt &rhs)
 
 bool Project1::operator==(const BigInt &lhs, const BigInt &rhs)
 {
+   if (lhs.pos != rhs.pos || lhs.val.size() != rhs.val.size())
+   {
+      return false;
+   }
+
+   for (int i = (int)lhs.val.size() - 1; i >= 0; --i)
+   {
+      if (lhs.val[i] != rhs.val[i])
+      {
+         return false;
+      }
+   }
    return true;
 }
 
 bool Project1::operator!=(const BigInt &lhs, const BigInt &rhs)
 {
-   return true;
+   return !(lhs == rhs);
 }
 
 bool Project1::operator<(const BigInt &lhs, const BigInt &rhs)
@@ -146,6 +156,18 @@ istream &
 Project1::operator>>(istream &is, BigInt &bi)
 {
    return is;
+}
+
+void 
+Project1::BigInt::swap(BigInt &other)
+{
+   vector<int> tVal(other.val);
+   other.val = val;
+   val = tVal;
+
+   bool tPos(other.pos);
+   other.pos = pos;
+   pos = tPos;
 }
 
 void
