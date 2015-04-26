@@ -44,6 +44,10 @@ Project1::BigInt::BigInt(const string &strInt)
 const Project1::BigInt &
 Project1::BigInt::operator=(const BigInt &rhs)
 {
+   // see pp. 82-83 in course notes (Ray: "use this approach")
+   // BigInt temp(rhs);
+   // Swap(temp);
+   // return *this;
    return rhs;
 }
 

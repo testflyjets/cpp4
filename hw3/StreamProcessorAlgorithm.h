@@ -7,13 +7,13 @@
  * Windows 8.1 Enterprise 64-bit
  * Microsoft Visual Studio 2013 Express for Desktop
  *
- * StreamProcessingAlgorithm is an implementation of a
+ * StreamProcessorAlgorithm is an implementation of a
  * stream processing algorithm using the Template Method
  * design pattern.
  */
 
-#ifndef STREAMPROCESSINGALGORITHM_H
-#define STREAMPROCESSINGALGORITHM_H
+#ifndef STREAMPROCESSORALGORITHM_H
+#define STREAMPROCESSORALGORITHM_H
 
 #include <iostream>
 using std::istream;
