@@ -50,6 +50,12 @@ namespace Project1
       const BigInt &operator-=(const BigInt &);
 
    private: 
+      // create a BigInt from a string
+      void fromString(const string &);
+
+      // the number of digits
+      size_t numberOfDigits() const;
+
       void removeLeadingZeroes();
 
       vector<int> val;
