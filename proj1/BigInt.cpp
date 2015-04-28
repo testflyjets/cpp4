@@ -92,7 +92,7 @@ Project1::BigInt::operator+=(const BigInt &rhs)
             : 0);
    }
    
-   // carry digits and fix the sign as required
+   // normalize the sign, digits, and leading zeroes
    normalize(false);
 
    return *this;
@@ -146,11 +146,13 @@ Project1::operator-(const BigInt &lhs, const BigInt &rhs)
 
 bool Project1::operator==(const BigInt &lhs, const BigInt &rhs)
 {
+   // if the signs and lengths differ, they aren't equal
    if (lhs.pos != rhs.pos || lhs.val.size() != rhs.val.size())
    {
       return false;
    }
 
+   // compare individual digits for equality
    for (int i = (int)lhs.val.size() - 1; i >= 0; --i)
    {
       if (lhs.val[i] != rhs.val[i])
@@ -168,7 +170,8 @@ bool Project1::operator!=(const BigInt &lhs, const BigInt &rhs)
 
 bool Project1::operator<(const BigInt &lhs, const BigInt &rhs)
 {
-   // if the numbers have opposite signs
+   // if the numbers have opposite signs then the
+   // negative number is less
    if (lhs.pos && !rhs.pos)
    {
       return false;
@@ -190,9 +193,9 @@ bool Project1::operator<(const BigInt &lhs, const BigInt &rhs)
       return lhs.pos ? true : false;
    }
 
-   // if the numbers have the same signs and the
-   // same numbers of digits, compare individual digits
-   // beginning with the most significant digit
+   // if the numbers have the same sign and the
+   // same number of digits, compare individual digits
+   // beginning with the least significant digit
    for (int i = (int)lhs.val.size() - 1; i >= 0; --i)
    {
       if (lhs.val[i] < rhs.val[i])
@@ -254,6 +257,7 @@ Project1::operator>>(istream &is, BigInt &n)
 void 
 Project1::BigInt::swap(BigInt &other)
 {
+   // swap the digits and sign of two numbers
    vector<int> tempVal(other.val);
    other.val = val;
    val = tempVal;
@@ -290,7 +294,6 @@ Project1::BigInt::fromString(const string &s)
       pos = false;
       posMSD = 1;
    }
-
    if (s[0] == '+')
    {
       posMSD = 1;
@@ -314,13 +317,8 @@ Project1::BigInt::fromString(const string &s)
       val.push_back(atoi(digit.c_str()));
    }
 
+   // normalize the number; it already has a valid sign
    normalize(true);
-}
-
-size_t
-Project1::BigInt::numberOfDigits() const
-{
-   return val.size();
 }
 
 void

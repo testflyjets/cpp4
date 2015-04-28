@@ -41,6 +41,7 @@ namespace Project1
       BigInt(); 
       BigInt(const BigInt &); 
       BigInt(long long); 
+
       // Throws invalid_argument if string malformed (contains 
       // anything other than a legally formatted number) 
       BigInt(const string &);
@@ -52,15 +53,14 @@ namespace Project1
    private: 
       // create a BigInt from a string
       void fromString(const string &);
+
       // swap contents between this and another instance
       void swap(BigInt &);
-
-      // the number of digits
-      size_t numberOfDigits() const;
 
       // normalize the number's sign, base, and leading zeroes
       void normalize(const bool hasValidSign = true);
 
+      // fix the signs after adding or subtracting digits
       bool equalizeSigns();
 
       // truncate individual digits to the base value,
