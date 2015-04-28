@@ -58,8 +58,9 @@ namespace Project1
       // the number of digits
       size_t numberOfDigits() const;
 
-      // correct the sign of the number
-      void correctSign(const bool hasValidSign = true);
+      // normalize the number's sign, base, and leading zeroes
+      void normalize(const bool hasValidSign = true);
+
       bool equalizeSigns();
 
       // truncate individual digits to the base value,

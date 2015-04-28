@@ -93,8 +93,8 @@ Project1::BigInt::operator+=(const BigInt &rhs)
    }
    
    // carry digits and fix the sign as required
-   truncateToBase();
-   correctSign(false);
+   normalize(false);
+
    return *this;
 }
 
@@ -121,22 +121,27 @@ Project1::BigInt::operator-=(const BigInt &rhs)
    }
    
    // carry digits and fix the sign as required
-   truncateToBase();
-   correctSign(false);
+   normalize(false);
 
    return *this;
 }
 
 const Project1::BigInt 
 Project1::operator+(const BigInt &lhs, const BigInt &rhs)
-{
-   return lhs;
+{  
+   BigInt result(lhs);
+   result += rhs;
+
+   return result;
 }
 
 const Project1::BigInt
 Project1::operator-(const BigInt &lhs, const BigInt &rhs)
 {
-   return lhs;
+   BigInt result(lhs);
+   result -= rhs;
+
+   return result;
 }
 
 bool Project1::operator==(const BigInt &lhs, const BigInt &rhs)
@@ -163,22 +168,60 @@ bool Project1::operator!=(const BigInt &lhs, const BigInt &rhs)
 
 bool Project1::operator<(const BigInt &lhs, const BigInt &rhs)
 {
-   return true;
+   // if the numbers have opposite signs
+   if (lhs.pos && !rhs.pos)
+   {
+      return false;
+   }
+   if (!lhs.pos && rhs.pos)
+   {
+      return true;
+   }
+
+   // if the numbers have the same sign and one
+   // has more digits than the other
+   if (lhs.val.size() > rhs.val.size())
+   {
+      return lhs.pos ? false : true;
+   }
+
+   if (lhs.val.size() < rhs.val.size())
+   {
+      return lhs.pos ? true : false;
+   }
+
+   // if the numbers have the same signs and the
+   // same numbers of digits, compare individual digits
+   // beginning with the most significant digit
+   for (int i = (int)lhs.val.size() - 1; i >= 0; --i)
+   {
+      if (lhs.val[i] < rhs.val[i])
+      {
+         return lhs.pos ? true : false;
+      }
+
+      if (lhs.val[i] > rhs.val[i])
+      {
+         return lhs.pos ? false : true;
+      }
+   }
+
+   return false;
 }
 
 bool Project1::operator<=(const BigInt &lhs, const BigInt &rhs)
 {
-   return true;
+   return lhs < rhs || lhs == rhs;
 }
 
 bool Project1::operator>(const BigInt &lhs, const BigInt &rhs)
 {
-   return true;
+   return rhs < lhs;
 }
 
 bool Project1::operator>=(const BigInt &lhs, const BigInt &rhs)
 {
-   return true;
+   return lhs > rhs || lhs == rhs;
 }
 
 ostream &
@@ -192,27 +235,32 @@ Project1::operator<<(ostream &os, const BigInt &n)
     for (int i = (int) n.val.size() - 1; i >= 0; --i)
     {
       os << n.val[i];
-
     }
+
     return os;
 }
 
 istream &
-Project1::operator>>(istream &is, BigInt &bi)
+Project1::operator>>(istream &is, BigInt &n)
 {
+   string str;
+
+   is >> str;
+   n.fromString(str);
+
    return is;
 }
 
 void 
 Project1::BigInt::swap(BigInt &other)
 {
-   vector<int> tVal(other.val);
+   vector<int> tempVal(other.val);
    other.val = val;
-   val = tVal;
+   val = tempVal;
 
-   bool tPos(other.pos);
+   bool tempPos(other.pos);
    other.pos = pos;
-   pos = tPos;
+   pos = tempPos;
 }
 
 void
@@ -248,7 +296,7 @@ Project1::BigInt::fromString(const string &s)
       posMSD = 1;
    }
 
-   // just a pos/neg sign alone is invalid
+   // just a plus or minus sign alone is invalid
    if (posMSD == 1 && s.length() == 1)
    {
       throw invalid_argument("malformed number string");
@@ -266,8 +314,7 @@ Project1::BigInt::fromString(const string &s)
       val.push_back(atoi(digit.c_str()));
    }
 
-   correctSign();
-   removeLeadingZeroes();
+   normalize(true);
 }
 
 size_t
@@ -277,8 +324,10 @@ Project1::BigInt::numberOfDigits() const
 }
 
 void
-Project1::BigInt::correctSign(const bool hasValidSign)
+Project1::BigInt::normalize(const bool hasValidSign)
 {
+   truncateToBase();
+
    // don't allow -0 (negative zero)
    if (val.size() == 1 && val[0] == 0)
    {
@@ -297,6 +346,8 @@ Project1::BigInt::correctSign(const bool hasValidSign)
          val[i] = abs(val[i]);
       }
    }
+
+   removeLeadingZeroes();
 }
 
 bool
@@ -320,8 +371,10 @@ Project1::BigInt::equalizeSigns()
          if (val[i] < 0)
          {
             int k = 0, index = i + 1;
-            for (; (size_t)(index) < val.size() && val[index] == 0; ++k, ++index); // count adjacent zeros on left
-            { // number on the left is positive
+            // count adjacent zeros on left
+            for (; (size_t)(index) < val.size() && val[index] == 0; ++k, ++index); 
+            { 
+               // number on the left is positive
                val[index] -= 1;
                val[i] += BASE;
                for (; k > 0; --k)
@@ -339,8 +392,10 @@ Project1::BigInt::equalizeSigns()
          if (val[i] > 0)
          {
             int k = 0, index = i + 1;
-            for (; (size_t)(index) < val.size() && val[index] == 0; ++k, ++index); // count adjacent zeros on right
-            { // number on the left is negative
+            // count adjacent zeros on right
+            for (; (size_t)(index) < val.size() && val[index] == 0; ++k, ++index); 
+            { 
+               // number on the left is negative
                val[index] += 1;
                val[i] -= BASE;
                for (; k > 0; --k)
