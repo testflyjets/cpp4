@@ -57,6 +57,9 @@ namespace Project1
       // swap contents between this and another instance
       void swap(BigInt &);
 
+      // resize to larger number to make adding and subtracting simpler
+      void resizeToLarger(const BigInt &);
+
       // normalize the number's sign, base, and leading zeroes
       void normalize(const bool hasValidSign = true);
 

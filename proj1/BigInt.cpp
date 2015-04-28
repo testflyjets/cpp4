@@ -36,7 +36,6 @@ Project1::BigInt::BigInt(const BigInt &n)
 :  val(n.val),
    pos(n.pos)
 {
-
 }
 
 Project1::BigInt::BigInt(long long ll)
@@ -49,6 +48,8 @@ Project1::BigInt::BigInt(long long ll)
       ll = -ll;
    }
 
+   // successively divide ll by the base 
+   // to parse it into digits
    do
    {
       lldiv_t dt = lldiv(ll, BASE);
@@ -75,10 +76,7 @@ Project1::BigInt::operator+=(const BigInt &rhs)
 {
    // if the rhs value has more digits, resize 
    // to match and set values to 0
-   if (rhs.val.size() > val.size())
-   {
-      val.resize(rhs.val.size(), 0);
-   }
+   resizeToLarger(rhs);
 
    // add the corresponding elements from each
    // side, handling the case of negative numbers
@@ -88,8 +86,8 @@ Project1::BigInt::operator+=(const BigInt &rhs)
          (i < rhs.val.size() ? 
             (rhs.pos ? 
                rhs.val[i] : 
-               -rhs.val[i]) 
-            : 0);
+               -rhs.val[i])  : 
+            0);
    }
    
    // normalize the sign, digits, and leading zeroes
@@ -103,10 +101,7 @@ Project1::BigInt::operator-=(const BigInt &rhs)
 {
    // if the rhs value has more digits, resize 
    // to match and set values to 0
-   if (rhs.val.size() > val.size())
-   {
-      val.resize(rhs.val.size(), 0);
-   }
+   resizeToLarger(rhs);
 
    // subtract the corresponding elements from each
    // side, handling the case of negative numbers
@@ -116,8 +111,8 @@ Project1::BigInt::operator-=(const BigInt &rhs)
          (i < rhs.val.size() ? 
             (rhs.pos ? 
                rhs.val[i] : 
-               -rhs.val[i]) 
-            : 0);
+               -rhs.val[i]) : 
+            0);
    }
    
    // carry digits and fix the sign as required
@@ -265,6 +260,15 @@ Project1::BigInt::swap(BigInt &other)
    bool tempPos(other.pos);
    other.pos = pos;
    pos = tempPos;
+}
+
+void
+Project1::BigInt::resizeToLarger(const BigInt &rhs)
+{
+   if (rhs.val.size() > val.size())
+   {
+      val.resize(rhs.val.size(), 0);
+   }
 }
 
 void
