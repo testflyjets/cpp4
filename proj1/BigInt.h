@@ -59,7 +59,12 @@ namespace Project1
       size_t numberOfDigits() const;
 
       // correct the sign of the number
-      void correctSign();
+      void correctSign(const bool hasValidSign = true);
+      bool equalizeSigns();
+
+      // truncate individual digits to the base value,
+      // effectively doing the "carry the 1" action
+      void truncateToBase();
 
       // remove leading zeroes
       void removeLeadingZeroes();
