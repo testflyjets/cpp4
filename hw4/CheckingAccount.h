@@ -3,16 +3,17 @@
 #define CHECKINGACCOUNT_H
 
 #include <iosfwd>
-#include <list>
-#include <string>
-#include <vector>
-using namespace std;
+using std::ostream;
 
-#include "BankAccount.h" // class BankAccount
+#include <string>
+using std::string;
+
+#include "BankAccount.h" // class BankAccount, must include
+                         // due to public inheritance
 
 class Check;             // forward declaration 
 
-class CheckingAccount : public BankAccount
+class CheckingAccount : public BankAccount 
 {
 public:
    CheckingAccount(long accountNumber,
@@ -32,13 +33,8 @@ protected:
    void processAccount();
 
 private:
-   long accountNumber_;
-   double balance_;
-   string firstName_;
-   string lastName_;
-   vector<double> deposits_;
-   vector<double> withdrawals_;
-   list<Check> checks_;
+   struct CheckingAccountImpl;
+   CheckingAccountImpl *pimpl_;
 };
 
 ostream &operator<<(ostream &, const CheckingAccount &);

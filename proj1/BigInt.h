@@ -51,6 +51,8 @@ namespace Project1
       const BigInt &operator-=(const BigInt &);
 
    private: 
+      void addElement(size_t, const BigInt);
+
       // create a BigInt from a string
       void fromString(const string &);
 

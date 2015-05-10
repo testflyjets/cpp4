@@ -12,18 +12,19 @@
 #include <cstdlib>
 using std::atoi;
 
-#include <stdexcept>
-using std::invalid_argument;
-
 #include <iostream>
 using std::istream;
 using std::ostream;
+
+#include <stdexcept>
+using std::invalid_argument;
 
 #include <string>
 using std::string;
 
 #include "BigInt.h"
 
+// the base in which the digits of BigInt are stored
 static const int BASE = 10;
 
 Project1::BigInt::BigInt()
@@ -71,6 +72,17 @@ Project1::BigInt::operator=(const BigInt &rhs)
    return *this;
 }
 
+void
+Project1::BigInt::addElement(size_t i, const BigInt rhs)
+{
+   val[i] = (pos ? val[i] : -val[i]) + 
+      (i < rhs.val.size() ? 
+         (rhs.pos ? 
+            rhs.val[i] : 
+            -rhs.val[i])  : 
+         0);
+}
+
 const Project1::BigInt &
 Project1::BigInt::operator+=(const BigInt &rhs)
 {
@@ -82,12 +94,7 @@ Project1::BigInt::operator+=(const BigInt &rhs)
    // side, handling the case of negative numbers
    for (size_t i = 0; i < val.size(); ++i)
    {
-      val[i] = (pos ? val[i] : -val[i]) + 
-         (i < rhs.val.size() ? 
-            (rhs.pos ? 
-               rhs.val[i] : 
-               -rhs.val[i])  : 
-            0);
+      addElement(i, rhs);
    }
    
    // normalize the sign, digits, and leading zeroes

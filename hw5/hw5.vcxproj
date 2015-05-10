@@ -11,8 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{DB33A68E-26EF-4396-8935-C3BB32B8E3BE}</ProjectGuid>
-    <RootNamespace>hw4</RootNamespace>
+    <ProjectGuid>{3B200BBF-F010-43B7-8D58-F477C6394DF8}</ProjectGuid>
+    <RootNamespace>hw5</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -49,6 +49,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -71,10 +72,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CheckingAccount.h" />
+    <ClCompile Include="auto_ptr.cpp" />
+    <ClCompile Include="hw5.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CheckingAccount.cpp" />
+    <ClInclude Include="auto_ptr.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
