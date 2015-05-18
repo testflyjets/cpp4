@@ -72,7 +72,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="auto_ptr.cpp" />
     <ClCompile Include="hw5.cpp" />
   </ItemGroup>
   <ItemGroup>
