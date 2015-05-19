@@ -19,7 +19,7 @@ using std::list;
 
 using namespace ChrisMcCann::hw6;
 
-TEST(EmptyList)
+TEST(EmptyListPalindrome)
 {
    int data = {};
    list<int> ls(data, data);
@@ -57,6 +57,36 @@ TEST(InvalidEvenPalindrome)
    list<int> ls1(data, data + 8);
 
    CHECK(palindrome(ls1.begin(), ls1.end()) != true);
+}
+
+TEST(EmptyListCompress)
+{
+   int data = {};
+   list<int> ls(data, data), ls1;
+
+   compress(ls.begin(), ls.end(), back_inserter(ls1));
+
+   CHECK_EQUAL(data, data);
+}
+
+TEST(CompressNoDuplicates)
+{
+   int data[] = { 1, 2, 3, 1, 2, 3 };
+   list<int> ls(data, data + 6), ls1;
+
+   compress(ls.begin(), ls.end(), back_inserter(ls1));
+
+   CHECK_ARRAY_EQUAL(data, data, 6);
+}
+
+TEST(CompressWithDuplicates)
+{
+   int data[] = { 1, 1, 2, 2, 1, 1 };
+   list<int> ls(data, data + 6), ls1;
+
+   compress(ls.begin(), ls.end(), back_inserter(ls1));
+
+   CHECK_ARRAY_EQUAL(data, data, 6);
 }
 
 int main() {

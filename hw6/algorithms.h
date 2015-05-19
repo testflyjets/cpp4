@@ -34,7 +34,26 @@ namespace ChrisMcCann { namespace hw6 {
    template <typename ForwardIterator, typename OutputIterator>
    void compress(ForwardIterator first, ForwardIterator last, OutputIterator result)
    {
+      if (first != last)
+      {
+         // always add the first element
+         result = *first;
 
+         // sequence through the rest of the elements,
+         // add the next element if it's not the same
+         // as the previous one
+         ForwardIterator next = first; 
+         ++next;
+         while (next != last)
+         {
+            if (*next != *first)
+            {
+               result = *next;
+            }
+            ++first;
+            ++next;
+         }
+      }
    }
 }}
 
