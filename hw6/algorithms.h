@@ -25,7 +25,7 @@ namespace ChrisMcCann { namespace hw6 {
    bool palindrome(BidirectionalIterator first, BidirectionalIterator last)
    {
       for (; first != last && first != --last; ++first)
-      if (!equal(*first, *first, *last))
+      if (*first != *last)
          return false;
 
       return true;

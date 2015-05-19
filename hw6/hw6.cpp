@@ -19,12 +19,44 @@ using std::list;
 
 using namespace ChrisMcCann::hw6;
 
-TEST(IntegerPalindrome)
+TEST(EmptyList)
+{
+   int data = {};
+   list<int> ls(data, data);
+
+   CHECK(palindrome(ls.begin(), ls.end()) == true);
+}
+
+TEST(ValidOddPalindrome)
 {
    int data[] = { 1, 2, 3, 4, 3, 2, 1 };
    list<int> ls1(data, data + 7);
 
    CHECK(palindrome(ls1.begin(), ls1.end()) == true);
+}
+
+TEST(ValidEvenPalindrome)
+{
+   int data[] = { 1, 2, 3, 4, 4, 3, 2, 1 };
+   list<int> ls1(data, data + 8);
+
+   CHECK(palindrome(ls1.begin(), ls1.end()) == true);
+}
+
+TEST(InvalidOddPalindrome)
+{
+   int data[] = { 1, 2, 3, 4, 5, 6, 7 };
+   list<int> ls2(data, data + 7);
+
+   CHECK(palindrome(ls2.begin(), ls2.end()) != true);
+}
+
+TEST(InvalidEvenPalindrome)
+{
+   int data[] = { 0, 2, 3, 4, 4, 3, 2, 1 };
+   list<int> ls1(data, data + 8);
+
+   CHECK(palindrome(ls1.begin(), ls1.end()) != true);
 }
 
 int main() {
