@@ -76,7 +76,7 @@ TEST(CompressNoDuplicates)
 
    compress(ls.begin(), ls.end(), back_inserter(ls1));
 
-   CHECK_ARRAY_EQUAL(data, data, 6);
+   CHECK_ARRAY_EQUAL(ls1, ls, 6);
 }
 
 TEST(CompressWithDuplicates)
