@@ -21,7 +21,7 @@ TEST(CopyIntRangeToOutputStream)
 TEST(CopyUnsignedRangeToOutputStream)
 {
    IntegerRange<unsigned> r2(0, 6);
-   copy(r2.begin(), r2.end(), ostream_iterator<unsigned>(cout, " ")); // 0 1 2 3 4 5
+   //copy(r2.begin(), r2.end(), ostream_iterator<unsigned>(cout, " ")); // 0 1 2 3 4 5
 }
 
 int main() {
