@@ -10,6 +10,9 @@
  * class.
  * 
  */
+#include <iostream>
+using std::cout;
+
 #include <string>
 
 #include "auto_ptr.h"
@@ -83,9 +86,17 @@ TEST(CopyConstructorDerivedClass)
 TEST(Destructor)
 {
    TestClass *ptr = new TestClass;
-   auto_ptr<TestClass> ap(ptr);
+   auto_ptr<TestClass> *ap = new auto_ptr<TestClass>(ptr);
+
+   try
+   {
+      delete ap;
+   }
+   catch (...)
+   {
+      CHECK(false);
+   }
    
-   //ap.~auto_ptr<TestClass>();
 }
 
 TEST(GetAutoPtr)
@@ -172,5 +183,6 @@ TEST(ResetPreventSelfAssignment)
 }
 
 int main() {
+   cout << "Running tests for C4 HW5..." << "\n\n";
    return UnitTest::RunAllTests();
 }
