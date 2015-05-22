@@ -13,12 +13,15 @@ class IntegerRange
 {
 public:
    class iterator;
+
    IntegerRange(T low, T high) : low_(low), high_(high)
    {
       assert(low <= high);
    }
+
    const iterator begin() const { return iterator(low_); }
-   const iterator end() const { return iterator(high_); }
+   const iterator end()   const { return iterator(high_); }
+
 private:
    const T low_, high_;
 };
@@ -33,7 +36,7 @@ public:
    {}
 
    // constructor from T *
-   explicit iterator(T *pData) : pData_(pData)
+   explicit iterator(T pData) : pData_(pData)
    {}
 
    // preincrement
@@ -72,16 +75,38 @@ public:
       return pData_ == other.pData_;
    }
 
-   // operator !=
+   // operator!=
    bool operator!=(const iterator &other) const
    {
       return !operator==(other);
    }
 
+   // operator* r-value
+   const T &operator*() const
+   {
+      return pData_;
+   }
 
+   // operator* l-value
+   T &operator*()
+   {
+      return pData_;
+   }
+
+   // operator-> r-value
+   const T *operator->() const
+   {
+      return pData_;
+   }
+
+   // operator-> l-value
+   T *operator->()
+   {
+      return pData_;
+   }
 
 private:
-   T * pData_;
+   T pData_;
 };
 
 #endif
