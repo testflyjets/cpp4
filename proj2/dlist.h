@@ -65,7 +65,7 @@ namespace Project2
      const iterator end() const;
 
   private:
-     // You decide what goes here
+     size_type size_;
 
   };
 
@@ -125,6 +125,40 @@ namespace Project2
   private: 
     // You decide what goes here 
   };
+}
+
+template <typename T>
+Project2::dlist<T>::dlist() 
+: size_(0)
+{
+
+}
+
+template <typename T>
+Project2::dlist<T>::dlist(const dlist &other) 
+: size_(other.size())
+{
+
+}
+
+template <typename T>
+Project2::dlist<T>::~dlist()
+{
+
+}
+
+template <typename T>
+bool
+Project2::dlist<T>::empty() const
+{
+   return size_ == 0;
+}
+
+template <typename T>
+typename Project2::dlist<T>::size_type
+Project2::dlist<T>::size() const
+{
+   return size_;
 }
 
 #endif
