@@ -65,6 +65,8 @@ namespace Project2
      const iterator end() const;
 
   private:
+     node *front_;
+     node *back_;
      size_type size_;
 
   };
@@ -73,10 +75,16 @@ namespace Project2
   class dlist<T>::node
   {
   public:
-     node() : data_(0), next_(0), previous_(0)
+     node() : 
+        value_(0), 
+        next_(0), 
+        previous_(0)
      {}
 
-     node(T data) : data_(data)
+     node(T value, node *previous, node *next) : 
+        value_(0), 
+        previous_(previous),
+        next_(next) 
      {}
 
      node *next()
@@ -84,16 +92,31 @@ namespace Project2
         return next_;
      }
 
+     void next(node *next)
+     {
+        next_ = next;
+     }
+
      node *previous()
      {
         return previous_;
+     }
+
+     void previous(node *previous)
+     {
+        previous_ = previous;
+     }
+
+     T value()
+     {
+        return value_;
      }
 
   private:
      node *next_;
      node *previous_;
 
-     T data_;
+     T value_;
       
   };
 
@@ -129,16 +152,14 @@ namespace Project2
 
 template <typename T>
 Project2::dlist<T>::dlist() 
-: size_(0)
+: front_(0), back_(0), size_(0)
 {
-
 }
 
 template <typename T>
 Project2::dlist<T>::dlist(const dlist &other) 
 : size_(other.size())
 {
-
 }
 
 template <typename T>
@@ -160,5 +181,68 @@ Project2::dlist<T>::size() const
 {
    return size_;
 }
+
+template <typename T>
+T &
+Project2::dlist<T>::front()
+{
+   return front_->value;
+}
+
+template <typename T>
+const T &
+Project2::dlist<T>::front() const
+{
+   return front_->value();
+}
+
+template <typename T>
+T &
+Project2::dlist<T>::back()
+{
+   return back_->value();
+}
+
+template <typename T>
+const T &
+Project2::dlist<T>::back() const
+{
+   return back_->value();
+}
+
+template <typename T>
+void
+Project2::dlist<T>::push_front(const T &front)
+{
+
+}
+
+template <typename T>
+void
+Project2::dlist<T>::pop_front()
+{
+
+}
+
+template <typename T>
+void
+Project2::dlist<T>::push_back(const T &value)
+{
+    node* newNode = new node(value, nullptr, back_);
+    if(front_ == nullptr)
+        front_ = newNode;
+    if (back_ != nullptr)
+       back_->previous(newNode);
+    back_ = newNode;
+    ++size_;
+}
+
+template <typename T>
+void
+Project2::dlist<T>::pop_back()
+{
+
+}
+
 
 #endif
