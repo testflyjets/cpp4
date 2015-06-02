@@ -1,6 +1,10 @@
 
 #include <algorithm>
+using std::any_of;
 using std::copy;
+using std::count_if;
+using std::equal;
+using std::transform;
 
 #include <iostream>
 using std::cout;
@@ -40,6 +44,17 @@ TEST_FIXTURE(IteratorStringstreamFixture, CopyShortRangeToOutputStream)
    CHECK_EQUAL(expected, oss.str());
 }
 
+TEST(AnyOfShortIntegerRange)
+{
+   IntegerRange<short> r1(-5, 1);
+   
+   // any_of will return true if the predicate (s>0) is true for
+   // any element in the iterator range.  Since IntegerRange does
+   // not include the end element, the predicate should not return
+   // true.
+   CHECK(!any_of(r1.begin(), r1.end(), [](short s){ return s > 0; }));
+}
+
 TEST_FIXTURE(IteratorStringstreamFixture, CopyIntRangeToOutputStream)
 {
    IntegerRange<int> r1(-2, 3);
@@ -47,6 +62,18 @@ TEST_FIXTURE(IteratorStringstreamFixture, CopyIntRangeToOutputStream)
 
    string expected = "-2 -1 0 1 2 ";
    CHECK_EQUAL(expected, oss.str());
+}
+
+bool IsNegative(int i) { return i < 0; }
+
+TEST(CountIfNegativeIntIntegerRange)
+{
+   IntegerRange<int> r1(-2, 3);
+   int negativeCount = count_if(r1.begin(), r1.end(), IsNegative);
+   
+   // expect 2 values in range to be negative
+   int expectedCount = 2;
+   CHECK_EQUAL(expectedCount, negativeCount);
 }
 
 TEST_FIXTURE(IteratorStringstreamFixture, CopyUnsignedRangeToOutputStream)
@@ -58,12 +85,36 @@ TEST_FIXTURE(IteratorStringstreamFixture, CopyUnsignedRangeToOutputStream)
    CHECK_EQUAL(expected, oss.str());
 }
 
+TEST(EqualUnsignedIntegerRanges)
+{
+   IntegerRange<unsigned> r1(0, 6);
+   IntegerRange<unsigned> r2(0, 6);
+
+   CHECK(equal(r1.begin(), r1.end(), r2.begin()));
+
+   IntegerRange<unsigned> r3(1, 7);
+
+   CHECK(!equal(r1.begin(), r1.end(), r3.begin()));
+}
+
 TEST_FIXTURE(IteratorStringstreamFixture, CopyLongRangeToOutputStream)
 {
    IntegerRange<long> r2(10, 16);
    copy(r2.begin(), r2.end(), ostream_iterator<long>(oss, " ")); 
    
    string expected = "10 11 12 13 14 15 ";
+   CHECK_EQUAL(expected, oss.str());
+}
+
+// a unary function to test the InterRange iterator using std::transform
+int order_of_magnitudinize (long l) { return l*10; }
+
+TEST_FIXTURE(IteratorStringstreamFixture, TransformLongRangeToOutputStream)
+{
+   IntegerRange<long> r2(10, 16);
+   transform(r2.begin(), r2.end(), ostream_iterator<long>(oss, " "), order_of_magnitudinize); 
+   
+   string expected = "100 110 120 130 140 150 ";
    CHECK_EQUAL(expected, oss.str());
 }
 

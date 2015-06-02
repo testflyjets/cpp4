@@ -82,7 +82,7 @@ namespace Project2
      {}
 
      node(T value, node *previous, node *next) : 
-        value_(0), 
+        value_(&value), 
         previous_(previous),
         next_(next) 
      {}
@@ -186,7 +186,7 @@ template <typename T>
 T &
 Project2::dlist<T>::front()
 {
-   return front_->value;
+   return & front_->value();
 }
 
 template <typename T>

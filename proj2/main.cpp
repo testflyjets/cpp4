@@ -37,18 +37,18 @@ TEST(copyConstructor_emptySource)
 
 TEST(copyConstructor_nonEmptySource)
 {
-   //dlist<short> ls1;
-   //ls1.push_back(1);
-   //ls1.push_back(2);
-   //ls1.push_back(3);
-   //dlist<short> ls2(ls1);
+   dlist<short> ls1;
+   ls1.push_back(1);
+   ls1.push_back(2);
+   ls1.push_back(3);
+   dlist<short> ls2(ls1);
 
-   //CHECK(ls2.size() == 3);
-   //CHECK(ls2.front() == 1);
-   //ls2.pop_front();
-   //CHECK(ls2.front() == 2);
-   //ls2.pop_front();
-   //CHECK(ls2.front() == 3);
+   CHECK(ls2.size() == 3);
+   CHECK(ls2.front() == 1);
+   ls2.pop_front();
+   CHECK(ls2.front() == 2);
+   ls2.pop_front();
+   CHECK(ls2.front() == 3);
 }
 
 //TEST(iteratorRangeConstructor_nonEmptyRange)
