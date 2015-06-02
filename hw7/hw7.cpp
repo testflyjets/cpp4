@@ -1,3 +1,15 @@
+/* Christopher C. McCann, U05484743
+ * testflyjets@gmail.com
+ * C/C++ Programming 4, Section ID 106647, Ray Mitchell III
+ * Nune 1, 2015
+ * hw7.cpp
+ * Windows 8.1 Enterprise 64-bit
+ * Microsoft Visual Studio 2013 Express for Desktop
+ *
+ * A test program for an implementation of a templated integer range
+ * class and its bidirectional iterator.
+ * 
+ */
 
 #include <algorithm>
 using std::any_of;
