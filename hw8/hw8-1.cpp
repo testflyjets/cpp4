@@ -17,7 +17,9 @@
  */
 
 // 1. This code won't compile because the original constructor:
+//
 //    Foo t()
+//
 // was interpreted by the compiler as a function declaration 
 // instead of a default constructor.  Removing the () fixes it.
 
