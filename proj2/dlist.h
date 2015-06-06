@@ -3,6 +3,8 @@
 #ifndef DLIST_H
 #define DLIST_H
 
+#include <cassert>
+
 namespace Project2 
 { 
   template <typename T> 
@@ -152,17 +154,20 @@ namespace Project2
 
 template <typename T>
 Project2::dlist<T>::dlist() 
-: front_(0), back_(0), size_(0)
+: front_(nullptr), back_(nullptr), size_(0)
 {
- 
 }
 
 template <typename T>
 Project2::dlist<T>::dlist(const dlist &other) 
-: size_(other.size())
+: front_(nullptr), back_(nullptr), size_(other.size())
 {
    // iterate over other and copy its nodes
-
+   typename Project2::dlist<T>::iterator iter;
+   for (iter = other.begin(); iter != other.end(); iter++)
+   {
+      this->push_back(*iter);
+   }
 }
 
 template <typename T>
@@ -262,6 +267,80 @@ Project2::dlist<T>::erase(iterator)
 }
 
 template <typename T>
+bool
+Project2::dlist<T>::operator==(const dlist &rhs) const
+{
+
+}
+
+template <typename T>
+bool 
+Project2::dlist<T>::operator!=(const dlist &rhs) const
+{
+
+}
+
+template <typename T>
+bool 
+Project2::dlist<T>::operator<(const dlist &rhs) const
+{
+
+}
+
+template <typename T>
+bool 
+Project2::dlist<T>::operator<=(const dlist &rhs) const
+{
+
+}
+
+template <typename T>
+bool 
+Project2::dlist<T>::operator>(const dlist &rhs) const
+{
+
+}
+
+template <typename T>
+bool 
+Project2::dlist<T>::operator>=(const dlist &rhs) const
+{
+
+}
+
+template <typename T>
+typename Project2::dlist<T>::iterator
+Project2::dlist<T>::begin()
+{
+   return iterator(front_);
+}
+
+template <typename T>
+const typename Project2::dlist<T>::iterator 
+Project2::dlist<T>::begin() const
+{
+   return iterator(front_);
+}
+
+template <typename T>
+typename Project2::dlist<T>::iterator  
+Project2::dlist<T>::end()
+{
+   return iterator(back_);
+}
+
+template <typename T>
+const typename Project2::dlist<T>::iterator   
+Project2::dlist<T>::end() const
+{
+   return iterator(back_);
+}
+
+//
+// iterator method definitions
+//
+
+template <typename T>
 Project2::dlist<T>::iterator::iterator()
 : pData_(0)
 {}
@@ -273,14 +352,14 @@ Project2::dlist<T>::iterator::iterator(typename dlist<T>::node *pData)
 
 template <typename T>
 bool
-Project2::dlist<T>::iterator::operator==(const iterator &it) const
+Project2::dlist<T>::iterator::operator==(const iterator &other) const
 {
    return pData_ == other.pData_;
 }
 
 template <typename T>
 bool
-Project2::dlist<T>::iterator::operator!=(const iterator &it) const
+Project2::dlist<T>::iterator::operator!=(const iterator &other) const
 {
    return !operator==(other);
 }
@@ -317,28 +396,34 @@ template <typename T>
 typename Project2::dlist<T>::iterator &
 Project2::dlist<T>::iterator::operator++()
 {
-
+   pData_ = pData_->next();
+   return *this;
 }
 
 template <typename T>
 const typename Project2::dlist<T>::iterator
 Project2::dlist<T>::iterator::operator++(int)
 {
-
+   iterator temp(*this);
+   operator++();
+   return temp;
 }
 
 template <typename T>
 typename Project2::dlist<T>::iterator &
 Project2::dlist<T>::iterator::operator--()
 {
-
+   pData_ = pData_->previous();
+   return *this;
 }
 
 template <typename T>
 const typename Project2::dlist<T>::iterator
 Project2::dlist<T>::iterator::operator--(int)
 {
-
+   iterator temp(*this);
+   operator--();
+   return temp;
 }
 
 #endif
