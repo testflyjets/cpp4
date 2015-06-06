@@ -81,8 +81,8 @@ namespace Project2
         previous_(0)
      {}
 
-     node(T value, node *previous, node *next) : 
-        value_(&value), 
+     node(const T & value, node *previous, node *next) : 
+        value_(value), 
         previous_(previous),
         next_(next) 
      {}
@@ -107,7 +107,7 @@ namespace Project2
         previous_ = previous;
      }
 
-     T value()
+     T & value()
      {
         return value_;
      }
@@ -146,7 +146,7 @@ namespace Project2
     const iterator operator--(int);
 
   private: 
-    // You decide what goes here 
+     typename dlist<T>::node *pData_;
   };
 }
 
@@ -154,12 +154,15 @@ template <typename T>
 Project2::dlist<T>::dlist() 
 : front_(0), back_(0), size_(0)
 {
+ 
 }
 
 template <typename T>
 Project2::dlist<T>::dlist(const dlist &other) 
 : size_(other.size())
 {
+   // iterate over other and copy its nodes
+
 }
 
 template <typename T>
@@ -186,7 +189,7 @@ template <typename T>
 T &
 Project2::dlist<T>::front()
 {
-   return & front_->value();
+   return front_->value();
 }
 
 template <typename T>
@@ -244,5 +247,98 @@ Project2::dlist<T>::pop_back()
 
 }
 
+template <typename T>
+typename Project2::dlist<T>::iterator
+Project2::dlist<T>::insert(iterator, const T & t)
+{
+
+}
+
+template <typename T>
+typename Project2::dlist<T>::iterator
+Project2::dlist<T>::erase(iterator)
+{
+
+}
+
+template <typename T>
+Project2::dlist<T>::iterator::iterator()
+: pData_(0)
+{}
+
+template <typename T>
+Project2::dlist<T>::iterator::iterator(typename dlist<T>::node *pData)
+: pData_(pData)
+{}
+
+template <typename T>
+bool
+Project2::dlist<T>::iterator::operator==(const iterator &it) const
+{
+   return pData_ == other.pData_;
+}
+
+template <typename T>
+bool
+Project2::dlist<T>::iterator::operator!=(const iterator &it) const
+{
+   return !operator==(other);
+}
+
+template <typename T>
+T &
+Project2::dlist<T>::iterator::operator*()
+{
+   return pData_->value();
+}
+
+template <typename T>
+const T &
+Project2::dlist<T>::iterator::operator*() const
+{
+   return pData_->value();
+}
+
+template <typename T>
+T *
+Project2::dlist<T>::iterator::operator->()
+{
+   return &pData_->value();
+}
+
+template <typename T>
+const T *
+Project2::dlist<T>::iterator::operator->() const
+{
+   return &pData_->value();
+}
+
+template <typename T>
+typename Project2::dlist<T>::iterator &
+Project2::dlist<T>::iterator::operator++()
+{
+
+}
+
+template <typename T>
+const typename Project2::dlist<T>::iterator
+Project2::dlist<T>::iterator::operator++(int)
+{
+
+}
+
+template <typename T>
+typename Project2::dlist<T>::iterator &
+Project2::dlist<T>::iterator::operator--()
+{
+
+}
+
+template <typename T>
+const typename Project2::dlist<T>::iterator
+Project2::dlist<T>::iterator::operator--(int)
+{
+
+}
 
 #endif
