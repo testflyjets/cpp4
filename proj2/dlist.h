@@ -174,6 +174,18 @@ Project2::dlist<T>::dlist(const dlist &other)
 }
 
 template <typename T>
+template <typename InputIterator> Project2::dlist<T>::dlist(InputIterator first, InputIterator last)
+: front_(nullptr), back_(nullptr), size_(0)
+{
+   InputIterator iter;
+   for (iter = first; iter != last; iter++)
+   {
+      this->push_back(*iter);
+   }
+}
+
+
+template <typename T>
 Project2::dlist<T>::~dlist()
 {
 

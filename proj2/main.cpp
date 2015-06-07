@@ -51,21 +51,21 @@ TEST(copyConstructor_nonEmptySource)
    CHECK(ls2.front() == 3);
 }
 
-//TEST(iteratorRangeConstructor_nonEmptyRange)
-//{
-//   string data[] = { "the", "quick", "brown", "fox" };
-//   dlist<string> ls(data, data + sizeof(data) / sizeof(*data));
-//
-//   CHECK(ls.size() == 4);
-//   CHECK(ls.front() == "the");
-//   ls.pop_front();
-//   CHECK(ls.front() == "quick");
-//   ls.pop_front();
-//   CHECK(ls.front() == "brown");
-//   ls.pop_front();
-//   CHECK(ls.front() == "fox");
-//}
-//
+TEST(iteratorRangeConstructor_nonEmptyRange)
+{
+   string data[] = { "the", "quick", "brown", "fox" };
+   dlist<string> ls(data, data + sizeof(data) / sizeof(*data));
+
+   CHECK(ls.size() == 4);
+   CHECK(ls.front() == "the");
+   ls.pop_front();
+   CHECK(ls.front() == "quick");
+   ls.pop_front();
+   CHECK(ls.front() == "brown");
+   ls.pop_front();
+   CHECK(ls.front() == "fox");
+}
+
 //TEST(iteratorRangeConstructor_emptyRange)
 //{
 //   string data[] = { "the", "quick", "brown", "fox" };
