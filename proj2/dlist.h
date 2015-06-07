@@ -192,6 +192,17 @@ Project2::dlist<T>::~dlist()
 }
 
 template <typename T>
+Project2::dlist<T> &
+Project2::dlist<T>::operator=(const dlist &rhs)
+{
+   this->front_ = rhs.front_;
+   this->back_ = rhs.back_;
+   this->size_ = rhs.size_;
+
+   return *this;
+}
+
+template <typename T>
 bool
 Project2::dlist<T>::empty() const
 {

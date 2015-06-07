@@ -66,77 +66,77 @@ TEST(iteratorRangeConstructor_nonEmptyRange)
    CHECK(ls.front() == "fox");
 }
 
-//TEST(iteratorRangeConstructor_emptyRange)
-//{
-//   string data[] = { "the", "quick", "brown", "fox" };
-//   dlist<string> ls(data, data);
-//
-//   CHECK(ls.size() == 0);
-//}
-//
-//TEST(iteratorRangeConstructor_fromVector)
-//{
-//	string data[] = { "the", "quick", "brown", "fox" };
-//	vector<string> v(data, data + sizeof(data) / sizeof(*data));
-//	dlist<string> ls(v.begin(), v.end());
-//
-//	CHECK(equal(ls.begin(), ls.end(), v.begin()));
-//}
-//
-//TEST(destructor_empty)
-//{
-//   dlist<std::string> *pLs = new dlist<std::string>();
-//   try
-//   {
-//      delete pLs;
-//   }
-//   catch (...)
-//   {
-//      CHECK(false);  // Destructor shouldn't throw
-//   }
-//}
-//
-//TEST(destructor_nonEmpty)
-//{
-//   string data[] = { "the", "quick", "brown", "fox" };
-//   dlist<string> *pLs = new dlist<string>(data,
-//                                          data + sizeof(data) / sizeof(*data));
-//   try
-//   {
-//      delete pLs;
-//   }
-//   catch (...)
-//   {
-//      CHECK(false);  // Destructor shouldn't throw
-//   }
-//}
-//
-//TEST(copyAssignmentOperator_emptySource)
-//{
-//   dlist<short> ls1;
-//   dlist<short> ls2;
-//   ls2 = ls1;
-//
-//   CHECK(ls2.size() == 0);
-//}
-//
-//TEST(copyAssignmentOperator_nonEmptySource)
-//{
-//   dlist<short> ls1;
-//   ls1.push_back(1);
-//   ls1.push_back(2);
-//   ls1.push_back(3);
-//   dlist<short> ls2;
-//   ls2 = ls1;
-//
-//   CHECK(ls2.size() == 3);
-//   CHECK(ls2.front() == 1);
-//   ls2.pop_front();
-//   CHECK(ls2.front() == 2);
-//   ls2.pop_front();
-//   CHECK(ls2.front() == 3);
-//}
-//
+TEST(iteratorRangeConstructor_emptyRange)
+{
+   string data[] = { "the", "quick", "brown", "fox" };
+   dlist<string> ls(data, data);
+
+   CHECK(ls.size() == 0);
+}
+
+TEST(iteratorRangeConstructor_fromVector)
+{
+	string data[] = { "the", "quick", "brown", "fox" };
+	vector<string> v(data, data + sizeof(data) / sizeof(*data));
+	dlist<string> ls(v.begin(), v.end());
+
+	CHECK(equal(ls.begin(), ls.end(), v.begin()));
+}
+
+TEST(destructor_empty)
+{
+   dlist<std::string> *pLs = new dlist<std::string>();
+   try
+   {
+      delete pLs;
+   }
+   catch (...)
+   {
+      CHECK(false);  // Destructor shouldn't throw
+   }
+}
+
+TEST(destructor_nonEmpty)
+{
+   string data[] = { "the", "quick", "brown", "fox" };
+   dlist<string> *pLs = new dlist<string>(data,
+                                          data + sizeof(data) / sizeof(*data));
+   try
+   {
+      delete pLs;
+   }
+   catch (...)
+   {
+      CHECK(false);  // Destructor shouldn't throw
+   }
+}
+
+TEST(copyAssignmentOperator_emptySource)
+{
+   dlist<short> ls1;
+   dlist<short> ls2;
+   ls2 = ls1;
+
+   CHECK(ls2.size() == 0);
+}
+
+TEST(copyAssignmentOperator_nonEmptySource)
+{
+   dlist<short> ls1;
+   ls1.push_back(1);
+   ls1.push_back(2);
+   ls1.push_back(3);
+   dlist<short> ls2;
+   ls2 = ls1;
+
+   CHECK(ls2.size() == 3);
+   CHECK(ls2.front() == 1);
+   ls2.pop_front();
+   CHECK(ls2.front() == 2);
+   ls2.pop_front();
+   CHECK(ls2.front() == 3);
+}
+
 //TEST(empty_empty)
 //{
 //   dlist<short> ls;
