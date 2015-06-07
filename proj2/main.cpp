@@ -137,71 +137,71 @@ TEST(copyAssignmentOperator_nonEmptySource)
    CHECK(ls2.front() == 3);
 }
 
-//TEST(empty_empty)
-//{
-//   dlist<short> ls;
-//   
-//   CHECK(ls.empty());
-//}
-//
-//TEST(empty_nonEmpty)
-//{
-//   short data[] = { 1, 2, 3 };
-//   dlist<short> ls(data, data + sizeof(data) / sizeof(*data));
-//
-//   CHECK(!ls.empty());
-//}
-//
-//TEST(size_empty)
-//{
-//   dlist<short> ls;
-//   
-//   CHECK(ls.size() == 0);
-//}
-//
-//TEST(size_nonEmpty)
-//{
-//   short data[] = { 1, 2, 3 };
-//   dlist<short> ls(data, data + sizeof(data) / sizeof(*data));
-//
-//   CHECK(ls.size() == 3);
-//}
-//
-//TEST(front)
-//{
-//   short data[] = { 1, 2, 3 };
-//   dlist<short> ls(data, data + sizeof(data) / sizeof(*data));
-//
-//   CHECK(ls.front() == 1);
-//}
-//
-//TEST(back)
-//{
-//   short data[] = { 1, 2, 3 };
-//   dlist<short> ls(data, data + sizeof(data) / sizeof(*data));
-//
-//   CHECK(ls.back() == 3);
-//}
-//
-//TEST(pushFront_empty)
-//{
-//   dlist<short> ls;
-//   ls.push_front(1);
-//
-//   CHECK(ls.size() == 1);
-//   CHECK(ls.front() == 1);
-//}
-//
-//TEST(pushFront_nonEmpty)
-//{
-//   short data[] = { 1, 2, 3 };
-//   dlist<short> ls(data, data + sizeof(data) / sizeof(*data));
-//   ls.push_front(4);
-//
-//   CHECK(ls.size() == 4);
-//   CHECK(ls.front() == 4);
-//}
-//
+TEST(empty_empty)
+{
+   dlist<short> ls;
+   
+   CHECK(ls.empty());
+}
+
+TEST(empty_nonEmpty)
+{
+   short data[] = { 1, 2, 3 };
+   dlist<short> ls(data, data + sizeof(data) / sizeof(*data));
+
+   CHECK(!ls.empty());
+}
+
+TEST(size_empty)
+{
+   dlist<short> ls;
+   
+   CHECK(ls.size() == 0);
+}
+
+TEST(size_nonEmpty)
+{
+   short data[] = { 1, 2, 3 };
+   dlist<short> ls(data, data + sizeof(data) / sizeof(*data));
+
+   CHECK(ls.size() == 3);
+}
+
+TEST(front)
+{
+   short data[] = { 1, 2, 3 };
+   dlist<short> ls(data, data + sizeof(data) / sizeof(*data));
+
+   CHECK(ls.front() == 1);
+}
+
+TEST(back)
+{
+   short data[] = { 1, 2, 3 };
+   dlist<short> ls(data, data + sizeof(data) / sizeof(*data));
+
+   CHECK(ls.back() == 3);
+}
+
+TEST(pushFront_empty)
+{
+   dlist<short> ls;
+   ls.push_front(1);
+
+   CHECK(ls.size() == 1);
+   CHECK(ls.front() == 1);
+}
+
+TEST(pushFront_nonEmpty)
+{
+   short data[] = { 1, 2, 3 };
+   dlist<short> ls(data, data + sizeof(data) / sizeof(*data));
+   ls.push_front(4);
+
+   CHECK(ls.size() == 4);
+   CHECK(ls.front() == 4);
+}
+
 //TEST(popFront)
 //{
 //   short data[] = { 1, 2, 3 };

@@ -246,9 +246,15 @@ Project2::dlist<T>::back() const
 
 template <typename T>
 void
-Project2::dlist<T>::push_front(const T &front)
+Project2::dlist<T>::push_front(const T &value)
 {
-
+   node* newNode = new node(value, nullptr, back_);
+    if(back_ == nullptr)
+        back_ = newNode;
+    if (front_ != nullptr)
+       front_->next(newNode);
+    front_ = newNode;
+    ++size_;
 }
 
 template <typename T>
