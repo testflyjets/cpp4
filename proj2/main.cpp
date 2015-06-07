@@ -202,45 +202,45 @@ TEST(pushFront_nonEmpty)
    CHECK(ls.front() == 4);
 }
 
-//TEST(popFront)
-//{
-//   short data[] = { 1, 2, 3 };
-//   dlist<short> ls(data, data + sizeof(data) / sizeof(*data));
-//   ls.pop_front();
-//
-//   CHECK(ls.size() == 2);
-//   CHECK(ls.front() == 2);
-//}
-//
-//TEST(pushBack_empty)
-//{
-//   dlist<short> ls;
-//   ls.push_back(1);
-//
-//   CHECK(ls.size() == 1);
-//   CHECK(ls.back() == 1);
-//}
-//
-//TEST(pushBack_nonEmpty)
-//{
-//   short data[] = { 1, 2, 3 };
-//   dlist<short> ls(data, data + sizeof(data) / sizeof(*data));
-//   ls.push_back(4);
-//
-//   CHECK(ls.size() == 4);
-//   CHECK(ls.back() == 4);
-//}
-//
-//TEST(pop_back)
-//{
-//   short data[] = { 1, 2, 3 };
-//   dlist<short> ls(data, data + sizeof(data) / sizeof(*data));
-//   ls.pop_back();
-//
-//   CHECK(ls.size() == 2);
-//   CHECK(ls.back() == 2);
-//}
-//
+TEST(popFront)
+{
+   short data[] = { 1, 2, 3 };
+   dlist<short> ls(data, data + sizeof(data) / sizeof(*data));
+   ls.pop_front();
+
+   CHECK(ls.size() == 2);
+   CHECK(ls.front() == 2);
+}
+
+TEST(pushBack_empty)
+{
+   dlist<short> ls;
+   ls.push_back(1);
+
+   CHECK(ls.size() == 1);
+   CHECK(ls.back() == 1);
+}
+
+TEST(pushBack_nonEmpty)
+{
+   short data[] = { 1, 2, 3 };
+   dlist<short> ls(data, data + sizeof(data) / sizeof(*data));
+   ls.push_back(4);
+
+   CHECK(ls.size() == 4);
+   CHECK(ls.back() == 4);
+}
+
+TEST(pop_back)
+{
+   short data[] = { 1, 2, 3 };
+   dlist<short> ls(data, data + sizeof(data) / sizeof(*data));
+   ls.pop_back();
+
+   CHECK(ls.size() == 2);
+   CHECK(ls.back() == 2);
+}
+
 //TEST(insert_empty_begin)
 //{
 //   dlist<short> ls;

@@ -285,7 +285,11 @@ template <typename T>
 void
 Project2::dlist<T>::pop_back()
 {
-
+   if (back_ != nullptr)
+   {
+      back_ = back_->next();
+      --size_;
+   }
 }
 
 template <typename T>
