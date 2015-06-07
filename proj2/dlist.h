@@ -160,13 +160,16 @@ Project2::dlist<T>::dlist()
 
 template <typename T>
 Project2::dlist<T>::dlist(const dlist &other) 
-: front_(nullptr), back_(nullptr), size_(other.size())
+: front_(nullptr), back_(nullptr), size_(0)
 {
    // iterate over other and copy its nodes
    typename Project2::dlist<T>::iterator iter;
-   for (iter = other.begin(); iter != other.end(); iter++)
+   if (!other.empty())
    {
-      this->push_back(*iter);
+      for (iter = other.begin(); iter != other.end(); iter++)
+      {
+         this->push_back(*iter);
+      }
    }
 }
 
@@ -229,7 +232,11 @@ template <typename T>
 void
 Project2::dlist<T>::pop_front()
 {
-
+   if (front_ != nullptr)
+   {
+      front_ = front_->previous();
+      --size_;
+   }
 }
 
 template <typename T>
@@ -326,18 +333,20 @@ template <typename T>
 typename Project2::dlist<T>::iterator  
 Project2::dlist<T>::end()
 {
-   return iterator(back_);
+   // we need to return the element after the 
+   // last element, so get the previous node
+   return iterator(back_->previous());
 }
 
 template <typename T>
 const typename Project2::dlist<T>::iterator   
 Project2::dlist<T>::end() const
 {
-   return iterator(back_);
+   return iterator(back_->previous());
 }
 
 //
-// iterator method definitions
+// iterator methods
 //
 
 template <typename T>
@@ -396,7 +405,7 @@ template <typename T>
 typename Project2::dlist<T>::iterator &
 Project2::dlist<T>::iterator::operator++()
 {
-   pData_ = pData_->next();
+   pData_ = pData_->previous();
    return *this;
 }
 
@@ -413,7 +422,7 @@ template <typename T>
 typename Project2::dlist<T>::iterator &
 Project2::dlist<T>::iterator::operator--()
 {
-   pData_ = pData_->previous();
+   pData_ = pData_->next();
    return *this;
 }
 
