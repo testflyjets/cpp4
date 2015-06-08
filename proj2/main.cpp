@@ -431,13 +431,13 @@ TEST(end_empty)
    CHECK(ls.end() == ls.begin());
 }
 
-//TEST(end_nonEmpty)
-//{
-//   short data[] = { 1, 2, 3 };
-//   dlist<short> ls(data, data + sizeof(data) / sizeof(*data));
-//
-//   CHECK(*(--ls.end()) == 3);
-//}
+TEST(end_nonEmpty)
+{
+   short data[] = { 1, 2, 3 };
+   dlist<short> ls(data, data + sizeof(data) / sizeof(*data));
+
+   CHECK(*(--ls.end()) == 3);
+}
 
 TEST(beginEnd_vectorFromDlist)
 {
