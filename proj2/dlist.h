@@ -147,7 +147,7 @@ namespace Project2
     iterator &operator--(); 
     const iterator operator--(int);
 
-    typename dlist<T>::node * data() const;
+    typename dlist<T>::node *data() const;
 
   private: 
      typename dlist<T>::node *pData_;
@@ -158,6 +158,7 @@ template <typename T>
 Project2::dlist<T>::dlist() 
 : front_(nullptr), back_(nullptr), size_(0)
 {
+
 }
 
 template <typename T>
@@ -185,7 +186,6 @@ template <typename InputIterator> Project2::dlist<T>::dlist(InputIterator first,
       this->push_back(*iter);
    }
 }
-
 
 template <typename T>
 Project2::dlist<T>::~dlist()
@@ -253,9 +253,11 @@ Project2::dlist<T>::push_front(const T &value)
    node* newNode = new node(value, nullptr, back_);
     if(back_ == nullptr)
         back_ = newNode;
+
     if (front_ != nullptr)
        front_->next(newNode);
     front_ = newNode;
+
     ++size_;
 }
 
@@ -281,6 +283,7 @@ Project2::dlist<T>::push_back(const T &value)
     if (back_ != nullptr)
        back_->previous(newNode);
     back_ = newNode;
+
     ++size_;
 }
 
@@ -443,6 +446,7 @@ Project2::dlist<T>::end()
 {
    // we need to return the element after the 
    // last element, so get the previous node
+
    return back_ == nullptr ? iterator() : iterator(back_->previous());
 }
 
