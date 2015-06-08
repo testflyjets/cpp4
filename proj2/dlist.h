@@ -338,6 +338,8 @@ Project2::dlist<T>::erase(iterator position)
    }
 
    node *currentNode = position.data();
+   iterator nextIter = ++position;
+
    if (currentNode->previous() != nullptr)
    {
       currentNode->previous()->next(currentNode->next());
@@ -347,23 +349,36 @@ Project2::dlist<T>::erase(iterator position)
       currentNode->next()->previous(currentNode->previous());
    }
 
+   delete currentNode;
    --size_;
 
-   return ++position;
+   return nextIter;
 }
 
 template <typename T>
 bool
 Project2::dlist<T>::operator==(const dlist &rhs) const
 {
+   if (this->size() != rhs.size())
+      return false;
 
+   iterator iterLhs = this->begin();
+   iterator iterRhs = rhs.begin();
+
+   for (; iterLhs != this->end(); ++iterLhs)
+   {
+      if (*iterLhs != *iterRhs)
+         return false;
+      ++iterRhs;
+   }
+   return true;
 }
 
 template <typename T>
 bool 
 Project2::dlist<T>::operator!=(const dlist &rhs) const
 {
-
+   return !operator==(rhs);
 }
 
 template <typename T>

@@ -283,42 +283,42 @@ TEST(erase)
    CHECK(equal(ls.begin(), ls.end(), EXPECTED_DATA));
 }
 
-//TEST(operatorEquals_equal)
-//{
-//   short data[] = { 1, 2, 3 };
-//   dlist<short> ls1(data, data + sizeof(data) / sizeof(*data));
-//   dlist<short> ls2(data, data + sizeof(data) / sizeof(*data));
-//
-//   CHECK(ls1 == ls2);
-//}
-//
-//TEST(operatorEquals_notEqual)
-//{
-//   short data[] = { 1, 2, 3 };
-//   dlist<short> ls1(data, data + sizeof(data) / sizeof(*data));
-//   dlist<short> ls2(data, data + sizeof(data) / sizeof(*data) - 1);
-//
-//   CHECK(!(ls1 == ls2));
-//}
-//
-//TEST(operatorNotEqual_equal)
-//{
-//   short data[] = { 1, 2, 3 };
-//   dlist<short> ls1(data, data + sizeof(data) / sizeof(*data));
-//   dlist<short> ls2(data, data + sizeof(data) / sizeof(*data));
-//
-//   CHECK(!(ls1 != ls2));
-//}
-//
-//TEST(operatorNotEqual_notEqual)
-//{
-//   short data[] = { 1, 2, 3 };
-//   dlist<short> ls1(data, data + sizeof(data) / sizeof(*data));
-//   dlist<short> ls2(data, data + sizeof(data) / sizeof(*data) - 1);
-//
-//   CHECK(ls1 != ls2);
-//}
-//
+TEST(operatorEquals_equal)
+{
+   short data[] = { 1, 2, 3 };
+   dlist<short> ls1(data, data + sizeof(data) / sizeof(*data));
+   dlist<short> ls2(data, data + sizeof(data) / sizeof(*data));
+
+   CHECK(ls1 == ls2);
+}
+
+TEST(operatorEquals_notEqual)
+{
+   short data[] = { 1, 2, 3 };
+   dlist<short> ls1(data, data + sizeof(data) / sizeof(*data));
+   dlist<short> ls2(data, data + sizeof(data) / sizeof(*data) - 1);
+
+   CHECK(!(ls1 == ls2));
+}
+
+TEST(operatorNotEqual_equal)
+{
+   short data[] = { 1, 2, 3 };
+   dlist<short> ls1(data, data + sizeof(data) / sizeof(*data));
+   dlist<short> ls2(data, data + sizeof(data) / sizeof(*data));
+
+   CHECK(!(ls1 != ls2));
+}
+
+TEST(operatorNotEqual_notEqual)
+{
+   short data[] = { 1, 2, 3 };
+   dlist<short> ls1(data, data + sizeof(data) / sizeof(*data));
+   dlist<short> ls2(data, data + sizeof(data) / sizeof(*data) - 1);
+
+   CHECK(ls1 != ls2);
+}
+
 //TEST(operatorLessThan_lessThan)
 //{
 //   short data[] = { 1, 2, 3 };
