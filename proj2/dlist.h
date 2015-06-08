@@ -119,7 +119,6 @@ namespace Project2
      node *previous_;
 
      T value_;
-      
   };
 
   template <typename T> 
@@ -251,14 +250,24 @@ void
 Project2::dlist<T>::push_front(const T &value)
 {
    node* newNode = new node(value, nullptr, back_);
-    if(back_ == nullptr)
-        back_ = newNode;
 
-    if (front_ != nullptr)
-       front_->next(newNode);
-    front_ = newNode;
+   // make the current front node point to the
+   // new node as its previous
+   if (front_ != nullptr)
+   {
+      front_->previous(newNode);
+   }
 
-    ++size_;
+   // set the back node if it's null
+   if (back_ == nullptr)
+   {
+      back_ = newNode;
+   }
+
+   // set the new node as front
+   front_ = newNode;
+
+   ++size_;
 }
 
 template <typename T>
@@ -267,8 +276,8 @@ Project2::dlist<T>::pop_front()
 {
    if (front_ != nullptr)
    {
-      front_ = front_->previous();
-      delete front_->next();
+      front_ = front_->next();
+      delete front_->previous();
       --size_;
    }
 }
@@ -277,11 +286,21 @@ template <typename T>
 void
 Project2::dlist<T>::push_back(const T &value)
 {
-    node* newNode = new node(value, nullptr, back_);
-    if(front_ == nullptr)
+    node* newNode = new node(value, back_, nullptr);
+
+    // set the front node if it's null
+    if (front_ == nullptr)
+    {
         front_ = newNode;
+    }
+
+    // make the new node the old back node's
+    // next node
     if (back_ != nullptr)
-       back_->previous(newNode);
+    {
+       back_->next(newNode);
+    }
+
     back_ = newNode;
 
     ++size_;
@@ -293,8 +312,8 @@ Project2::dlist<T>::pop_back()
 {
    if (back_ != nullptr)
    {
-      back_ = back_->next();
-      delete back_->previous();
+      back_ = back_->previous();
+      delete back_->next();
       --size_;
    }
 }
@@ -309,40 +328,50 @@ Project2::dlist<T>::insert(iterator position, const T &val)
       return position;
    }
    
-   for (iterator iter = this->begin(); iter != this->end(); iter++)
+   // get the node at the iterator position
+   node *currentNode = position.data();
+
+   // create a new node that's ahead of the current node
+   node *newNode = new node(val, currentNode->previous(), currentNode);
+
+   // handle the case where there were 2 or more nodes in
+   // the list; point the current node's previous node's next() at
+   // the newly inserted node
+   if (currentNode->previous() != nullptr)
    {
-      if (iter == position)
-      {
-         node *currentNode = position.data();
-         node *newNode = new node(val, currentNode->next(), currentNode);
-         currentNode->next()->previous(newNode);
-         currentNode->next(newNode);
-
-         return --position;
-      }
+      currentNode->previous()->next(newNode);
    }
+   // point the current node back to the newly inserted node
+   currentNode->previous(newNode);
 
-   return position;
+   // return the iterator one before the given position
+   return --position;
 }
 
 template <typename T>
 typename Project2::dlist<T>::iterator
 Project2::dlist<T>::erase(iterator position)
 {
+   // handle an empty list
    if (this->empty())
    {
       return position;
    }
 
+   // handle a list with one element
    if (this->size() == 1)
    {
       this->pop_front();
       return iterator();
    }
 
+   // get the node at the current iterator position
    node *currentNode = position.data();
+
+   // get an iterator pointing one past the current position
    iterator nextIter = ++position;
 
+   // fix up the node pointers on either side as required
    if (currentNode->previous() != nullptr)
    {
       currentNode->previous()->next(currentNode->next());
@@ -447,14 +476,14 @@ Project2::dlist<T>::end()
    // we need to return the element after the 
    // last element, so get the previous node
 
-   return back_ == nullptr ? iterator() : iterator(back_->previous());
+   return back_ == nullptr ? iterator() : iterator(back_->next());
 }
 
 template <typename T>
 const typename Project2::dlist<T>::iterator   
 Project2::dlist<T>::end() const
 {
-   return back_ == nullptr ? iterator() : iterator(back_->previous());
+   return back_ == nullptr ? iterator() : iterator(back_->next());
 }
 
 //
@@ -517,7 +546,7 @@ template <typename T>
 typename Project2::dlist<T>::iterator &
 Project2::dlist<T>::iterator::operator++()
 {
-   pData_ = pData_->previous();
+   pData_ = pData_->next();
    return *this;
 }
 
@@ -534,7 +563,7 @@ template <typename T>
 typename Project2::dlist<T>::iterator &
 Project2::dlist<T>::iterator::operator--()
 {
-   pData_ = pData_->next();
+   pData_ = pData_->previous();
    return *this;
 }
 
