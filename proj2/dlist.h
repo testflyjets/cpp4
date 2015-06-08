@@ -325,11 +325,21 @@ Project2::dlist<T>::insert(iterator position, const T &val)
    if (this->empty())
    {
       this->push_front(val);
-      return position;
+      return iterator(front_);
    }
    
-   // get the node at the iterator position
-   node *currentNode = position.data();
+   // get the node at the iterator position, handle the case
+   // where position == end()
+   node *currentNode;
+   if (position == this->end())
+   {
+      currentNode = back_;
+      position = iterator(back_);
+   }
+   else
+   {
+      currentNode = position.data();
+   }
 
    // create a new node that's ahead of the current node
    node *newNode = new node(val, currentNode->previous(), currentNode);
@@ -341,8 +351,15 @@ Project2::dlist<T>::insert(iterator position, const T &val)
    {
       currentNode->previous()->next(newNode);
    }
+   else
+   {
+      // the insertion point is at the front, so update front
+      this->front_ = newNode;
+   }
+
    // point the current node back to the newly inserted node
    currentNode->previous(newNode);
+
 
    // return the iterator one before the given position
    return --position;
