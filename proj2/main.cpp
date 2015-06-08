@@ -241,48 +241,48 @@ TEST(pop_back)
    CHECK(ls.back() == 2);
 }
 
-//TEST(insert_empty_begin)
-//{
-//   dlist<short> ls;
-//   ls.insert(ls.begin(), 1);
-//
-//   CHECK(ls.size() == 1);
-//   CHECK(ls.front() == 1);
-//}
-//
-//TEST(insert_empty_end)
-//{
-//   dlist<short> ls;
-//   ls.insert(ls.end(), 1);
-//
-//   CHECK(ls.size() == 1);
-//   CHECK(ls.front() == 1);
-//}
-//
-//TEST(insert_nonEmpty)
-//{
-//   const short EXPECTED_DATA[] = { 4, 1, 5, 2, 6, 3 };
-//   short data[] = { 4, 1, 5, 2, 6, 3 };
-//   dlist<short> ls(data, data + sizeof(data) / sizeof(*data));
-//
-//   CHECK(ls.size() == 6);
-//   CHECK(equal(ls.begin(), ls.end(), EXPECTED_DATA));
-//}
-//
-//TEST(erase)
-//{
-//   const short EXPECTED_DATA[] = { 1, 3 };
-//   short data[] = { 1, 2, 3 };
-//   dlist<short> ls(data, data + sizeof(data) / sizeof(*data));
-//
-//   dlist<short>::iterator i = ++ls.begin();
-//   i = ls.erase(i);
-//
-//   CHECK(ls.size() == 2);
-//   CHECK(*i = 3);
-//   CHECK(equal(ls.begin(), ls.end(), EXPECTED_DATA));
-//}
-//
+TEST(insert_empty_begin)
+{
+   dlist<short> ls;
+   ls.insert(ls.begin(), 1);
+
+   CHECK(ls.size() == 1);
+   CHECK(ls.front() == 1);
+}
+
+TEST(insert_empty_end)
+{
+   dlist<short> ls;
+   ls.insert(ls.end(), 1);
+
+   CHECK(ls.size() == 1);
+   CHECK(ls.front() == 1);
+}
+
+TEST(insert_nonEmpty)
+{
+   const short EXPECTED_DATA[] = { 4, 1, 5, 2, 6, 3 };
+   short data[] = { 4, 1, 5, 2, 6, 3 };
+   dlist<short> ls(data, data + sizeof(data) / sizeof(*data));
+
+   CHECK(ls.size() == 6);
+   CHECK(equal(ls.begin(), ls.end(), EXPECTED_DATA));
+}
+
+TEST(erase)
+{
+   const short EXPECTED_DATA[] = { 1, 3 };
+   short data[] = { 1, 2, 3 };
+   dlist<short> ls(data, data + sizeof(data) / sizeof(*data));
+
+   dlist<short>::iterator i = ++ls.begin();
+   i = ls.erase(i);
+
+   CHECK(ls.size() == 2);
+   CHECK(*i = 3);
+   CHECK(equal(ls.begin(), ls.end(), EXPECTED_DATA));
+}
+
 //TEST(operatorEquals_equal)
 //{
 //   short data[] = { 1, 2, 3 };
