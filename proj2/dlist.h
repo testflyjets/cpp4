@@ -385,28 +385,42 @@ template <typename T>
 bool 
 Project2::dlist<T>::operator<(const dlist &rhs) const
 {
+   if (this->size() < rhs.size())
+      return true;
+   if (this->size() > rhs.size())
+      return false;
 
+   iterator iterLhs = this->begin();
+   iterator iterRhs = rhs.begin();
+
+   for (; iterLhs != this->end(); ++iterLhs)
+   {
+      if (*iterLhs < *iterRhs)
+         return true;
+      ++iterRhs;
+   }
+   return false;
 }
 
 template <typename T>
 bool 
 Project2::dlist<T>::operator<=(const dlist &rhs) const
 {
-
+   return operator==(rhs) || operator<(rhs);
 }
 
 template <typename T>
 bool 
 Project2::dlist<T>::operator>(const dlist &rhs) const
 {
-
+   return !operator<=(rhs);
 }
 
 template <typename T>
 bool 
 Project2::dlist<T>::operator>=(const dlist &rhs) const
 {
-
+   return !operator<(rhs);
 }
 
 template <typename T>

@@ -319,96 +319,96 @@ TEST(operatorNotEqual_notEqual)
    CHECK(ls1 != ls2);
 }
 
-//TEST(operatorLessThan_lessThan)
-//{
-//   short data[] = { 1, 2, 3 };
-//   dlist<short> ls1(data, data + sizeof(data) / sizeof(*data) - 1);
-//   dlist<short> ls2(data, data + sizeof(data) / sizeof(*data));
-//
-//   CHECK(ls1 < ls2);
-//}
-//
-//TEST(operatorLessThan_notLessThan)
-//{
-//   short data[] = { 1, 2, 3 };
-//   dlist<short> ls1(data, data + sizeof(data) / sizeof(*data));
-//   dlist<short> ls2(data, data + sizeof(data) / sizeof(*data));
-//
-//   CHECK(!(ls1 < ls2));
-//}
-//
-//TEST(operatorLessThanOrEquals_lessThan)
-//{
-//   short data[] = { 1, 2, 3 };
-//   dlist<short> ls1(data, data + sizeof(data) / sizeof(*data) - 1);
-//   dlist<short> ls2(data, data + sizeof(data) / sizeof(*data));
-//
-//   CHECK(ls1 <= ls2);
-//}
-//
-//TEST(operatorLessThanOrEquals_equals)
-//{
-//   short data[] = { 1, 2, 3 };
-//   dlist<short> ls1(data, data + sizeof(data) / sizeof(*data));
-//   dlist<short> ls2(data, data + sizeof(data) / sizeof(*data));
-//
-//   CHECK(ls1 <= ls2);
-//}
-//
-//TEST(operatorLessThanOrEquals_greaterThan)
-//{
-//   short data[] = { 1, 2, 3 };
-//   dlist<short> ls1(data, data + sizeof(data) / sizeof(*data));
-//   dlist<short> ls2(data, data + sizeof(data) / sizeof(*data) - 1);
-//
-//   CHECK(!(ls1 <= ls2));
-//}
-//
-//TEST(operatorGreaterThan_greaterThan)
-//{
-//   short data[] = { 1, 2, 3 };
-//   dlist<short> ls1(data, data + sizeof(data) / sizeof(*data));
-//   dlist<short> ls2(data, data + sizeof(data) / sizeof(*data) - 1);
-//
-//   CHECK(ls1 > ls2);
-//}
-//
-//TEST(operatorGreaterThan_notGreaterThan)
-//{
-//   short data[] = { 1, 2, 3 };
-//   dlist<short> ls1(data, data + sizeof(data) / sizeof(*data));
-//   dlist<short> ls2(data, data + sizeof(data) / sizeof(*data));
-//
-//   CHECK(!(ls1 > ls2));
-//}
-//
-//TEST(operatorGreaterThanOrEquals_lessThan)
-//{
-//   short data[] = { 1, 2, 3 };
-//   dlist<short> ls1(data, data + sizeof(data) / sizeof(*data) - 1);
-//   dlist<short> ls2(data, data + sizeof(data) / sizeof(*data));
-//
-//   CHECK(!(ls1 >= ls2));
-//}
-//
-//TEST(operatorGreaterThanOrEquals_equals)
-//{
-//   short data[] = { 1, 2, 3 };
-//   dlist<short> ls1(data, data + sizeof(data) / sizeof(*data));
-//   dlist<short> ls2(data, data + sizeof(data) / sizeof(*data));
-//
-//   CHECK(ls1 >= ls2);
-//}
-//
-//TEST(operatorGreaterThanOrEquals_greaterThan)
-//{
-//   short data[] = { 1, 2, 3 };
-//   dlist<short> ls1(data, data + sizeof(data) / sizeof(*data));
-//   dlist<short> ls2(data, data + sizeof(data) / sizeof(*data) - 1);
-//
-//   CHECK(ls1 >= ls2);
-//}
-//
+TEST(operatorLessThan_lessThan)
+{
+   short data[] = { 1, 2, 3 };
+   dlist<short> ls1(data, data + sizeof(data) / sizeof(*data) - 1);
+   dlist<short> ls2(data, data + sizeof(data) / sizeof(*data));
+
+   CHECK(ls1 < ls2);
+}
+
+TEST(operatorLessThan_notLessThan)
+{
+   short data[] = { 1, 2, 3 };
+   dlist<short> ls1(data, data + sizeof(data) / sizeof(*data));
+   dlist<short> ls2(data, data + sizeof(data) / sizeof(*data));
+
+   CHECK(!(ls1 < ls2));
+}
+
+TEST(operatorLessThanOrEquals_lessThan)
+{
+   short data[] = { 1, 2, 3 };
+   dlist<short> ls1(data, data + sizeof(data) / sizeof(*data) - 1);
+   dlist<short> ls2(data, data + sizeof(data) / sizeof(*data));
+
+   CHECK(ls1 <= ls2);
+}
+
+TEST(operatorLessThanOrEquals_equals)
+{
+   short data[] = { 1, 2, 3 };
+   dlist<short> ls1(data, data + sizeof(data) / sizeof(*data));
+   dlist<short> ls2(data, data + sizeof(data) / sizeof(*data));
+
+   CHECK(ls1 <= ls2);
+}
+
+TEST(operatorLessThanOrEquals_greaterThan)
+{
+   short data[] = { 1, 2, 3 };
+   dlist<short> ls1(data, data + sizeof(data) / sizeof(*data));
+   dlist<short> ls2(data, data + sizeof(data) / sizeof(*data) - 1);
+
+   CHECK(!(ls1 <= ls2));
+}
+
+TEST(operatorGreaterThan_greaterThan)
+{
+   short data[] = { 1, 2, 3 };
+   dlist<short> ls1(data, data + sizeof(data) / sizeof(*data));
+   dlist<short> ls2(data, data + sizeof(data) / sizeof(*data) - 1);
+
+   CHECK(ls1 > ls2);
+}
+
+TEST(operatorGreaterThan_notGreaterThan)
+{
+   short data[] = { 1, 2, 3 };
+   dlist<short> ls1(data, data + sizeof(data) / sizeof(*data));
+   dlist<short> ls2(data, data + sizeof(data) / sizeof(*data));
+
+   CHECK(!(ls1 > ls2));
+}
+
+TEST(operatorGreaterThanOrEquals_lessThan)
+{
+   short data[] = { 1, 2, 3 };
+   dlist<short> ls1(data, data + sizeof(data) / sizeof(*data) - 1);
+   dlist<short> ls2(data, data + sizeof(data) / sizeof(*data));
+
+   CHECK(!(ls1 >= ls2));
+}
+
+TEST(operatorGreaterThanOrEquals_equals)
+{
+   short data[] = { 1, 2, 3 };
+   dlist<short> ls1(data, data + sizeof(data) / sizeof(*data));
+   dlist<short> ls2(data, data + sizeof(data) / sizeof(*data));
+
+   CHECK(ls1 >= ls2);
+}
+
+TEST(operatorGreaterThanOrEquals_greaterThan)
+{
+   short data[] = { 1, 2, 3 };
+   dlist<short> ls1(data, data + sizeof(data) / sizeof(*data));
+   dlist<short> ls2(data, data + sizeof(data) / sizeof(*data) - 1);
+
+   CHECK(ls1 >= ls2);
+}
+
 //TEST(begin_empty)
 //{
 //   dlist<short> ls;
