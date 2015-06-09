@@ -189,12 +189,18 @@ template <typename InputIterator> Project2::dlist<T>::dlist(InputIterator first,
 template <typename T>
 Project2::dlist<T>::~dlist()
 {
-
+   node *pDel = front_;
+   while (pDel != nullptr)
+   {
+      front_ = front_->next();
+      delete pDel;
+      pDel = front_;
+   }
 }
 
 template <typename T>
 Project2::dlist<T> &
-Project2::dlist<T>::operator=(const dlist &rhs)
+Project2::dlist<T>::operator=(const dlist &other)
 {
    this->front_ = rhs.front_;
    this->back_ = rhs.back_;
@@ -249,7 +255,7 @@ template <typename T>
 void
 Project2::dlist<T>::push_front(const T &value)
 {
-   node* newNode = new node(value, nullptr, back_);
+   node* newNode = new node(value, nullptr, front_);
 
    // make the current front node point to the
    // new node as its previous
@@ -314,6 +320,8 @@ Project2::dlist<T>::pop_back()
    {
       back_ = back_->previous();
       delete back_->next();
+      back_->next(nullptr);
+
       --size_;
    }
 }
