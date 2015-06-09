@@ -3,6 +3,8 @@
 #ifndef DLIST_H
 #define DLIST_H
 
+#include <algorithm>
+
 #include <cassert>
 
 namespace Project2 
@@ -33,6 +35,9 @@ namespace Project2
 
      // Copy assginment operator 
      dlist &operator=(const dlist &);
+
+     // convenience Swap function
+     void Swap(dlist &);
 
      // empty() & size() 
      bool empty() const;
@@ -202,11 +207,19 @@ template <typename T>
 Project2::dlist<T> &
 Project2::dlist<T>::operator=(const dlist &other)
 {
-   this->front_ = rhs.front_;
-   this->back_ = rhs.back_;
-   this->size_ = rhs.size_;
-
+   dlist temp(other);
+   Swap(temp);
    return *this;
+}
+
+template <typename T>
+void
+Project2::dlist<T>::Swap(dlist &other)
+{
+   std::swap(front_, other.front_);
+   std::swap(back_, other.back_);
+   std::swap(size_, other.size_);
+
 }
 
 template <typename T>

@@ -127,22 +127,22 @@ TEST(copyAssignmentOperator_emptySource)
    CHECK(ls2.size() == 0);
 }
 
-//TEST(copyAssignmentOperator_nonEmptySource)
-//{
-//   dlist<short> ls1;
-//   ls1.push_back(1);
-//   ls1.push_back(2);
-//   ls1.push_back(3);
-//   dlist<short> ls2;
-//   ls2 = ls1;
-//
-//   CHECK(ls2.size() == 3);
-//   CHECK(ls2.front() == 1);
-//   ls2.pop_front();
-//   CHECK(ls2.front() == 2);
-//   ls2.pop_front();
-//   CHECK(ls2.front() == 3);
-//}
+TEST(copyAssignmentOperator_nonEmptySource)
+{
+   dlist<short> ls1;
+   ls1.push_back(1);
+   ls1.push_back(2);
+   ls1.push_back(3);
+   dlist<short> ls2;
+   ls2 = ls1;
+
+   CHECK(ls2.size() == 3);
+   CHECK(ls2.front() == 1);
+   ls2.pop_front();
+   CHECK(ls2.front() == 2);
+   ls2.pop_front();
+   CHECK(ls2.front() == 3);
+}
 
 TEST(empty_empty)
 {
@@ -559,7 +559,7 @@ int main()
     // Uncomment this section and the section at the start of this file to
     // dump a memory leak report at program termination when using Visual
     // Studio.
-    //_CrtSetDbgFlag ( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
+    // _CrtSetDbgFlag ( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
 
     // Uncomment this section to set a memory-allocation breakpoint at the
     // given memory allocation number when using Visual Studio.
